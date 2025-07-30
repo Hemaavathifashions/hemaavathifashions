@@ -1,12 +1,15 @@
 [
   {
-    "title": "Festive Season Offer",
-    "text": "Get 10% off on all Sarees. Limited time only!",
-    "image": "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=facearea&w=300&q=80"
+    "image": "assets/offers/offer-sarees-cotton.jpg",
+    "title": "Flat 40% off on entire sarees",
+    "text": "Get a flat 40% discount on all sarees."
   },
   {
-    "title": "Kids Collection Discount",
-    "text": "Flat 20% discount on all Kids Nighties this week.",
-    "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=300&q=80"
+    "title": "4 Cotton-Dress Materials for 1000",
+    "text": "Grab 4 high quality cotton-dress materials for just ₹1000."
+  },
+  {
+    "title": "Flat 40% off on entire sarees",
+    "text": "Get a flat 40% discount on all sarees."
   }
 ]
