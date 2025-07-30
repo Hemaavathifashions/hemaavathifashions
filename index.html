@@ -1,4 +1,11 @@
-<!-- ... header ... -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hemaavathi Fashions</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
 <body>
   <header>
     <div class="header-content">
@@ -7,29 +14,37 @@
         <a href="about.html">About Us</a>
         <a href="contact.html">Contact</a>
         <a href="policy.html">Policy</a>
-        <a href="https://wa.me/919492324225" class="whatsapp-btn" target="_blank"><img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp" /></a>
+        <a href="https://wa.me/919492324225" class="whatsapp-btn" target="_blank" title="WhatsApp"><img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp" /></a>
       </nav>
     </div>
   </header>
-  <section class="hero">
-    <h1>Welcome to <span class="brand">Hemaavathi Fashions</span></h1>
-    <p>Trendy collections for Women, Men, and Kids at affordable prices.</p>
-  </section>
-  <section class="categories">
-    <button class="category-btn" data-category="Women / Sarees">Sarees</button>
-    <button class="category-btn" data-category="Women / Nighties">Nighties</button>
-    <button class="category-btn" data-category="Women / Panties">Panties</button>
-    <button class="category-btn" data-category="Men / Vests">Vests</button>
-    <button class="category-btn" data-category="Kids / Nighties">Kids Wear</button>
-  </section>
-  <section id="category-header" class="category-header" style="display:none;"></section>
-  <main>
-    <div id="product-list" class="product-grid"></div>
-  </main>
-  <section id="offers-section" class="offers-section" style="display:none;">
-    <h2>Current Offers</h2>
-    <div id="offers-list" class="offers-list"></div>
-  </section>
+
+  <div id="main-center-wrapper">
+    <section class="hero">
+      <h1>Welcome to <span class="brand">Hemaavathi Fashions</span></h1>
+      <p>Trendy collections for Women, Men, and Kids at affordable prices.</p>
+    </section>
+
+    <section class="categories">
+      <button class="category-btn" data-category="Women / Sarees">Sarees</button>
+      <button class="category-btn" data-category="Women / Nighties">Nighties</button>
+      <button class="category-btn" data-category="Women / Panties">Panties</button>
+      <button class="category-btn" data-category="Men / Vests">Vests</button>
+      <button class="category-btn" data-category="Kids / Nighties">Kids Wear</button>
+    </section>
+
+    <section id="category-header" class="category-header" style="display:none;"></section>
+
+    <main>
+      <div id="product-list" class="product-grid"></div>
+    </main>
+
+    <section id="offers-section" class="offers-section" style="display:none;">
+      <h2>Current Offers</h2>
+      <div id="offers-list" class="offers-list"></div>
+    </section>
+  </div>
+
   <footer>
     <div class="footer-content">
       <div class="footer-brand">
@@ -43,5 +58,95 @@
       </div>
     </div>
   </footer>
-  <!-- ...scripts... -->
+
+  <script>
+    let allProducts = [];
+    let categoryHeaders = {};
+    let allOffers = [];
+
+    // Load Products
+    fetch('products.json')
+      .then(r => r.json())
+      .then(products => { allProducts = products; });
+
+    // Load Category Headers
+    fetch('categoryHeaders.json')
+      .then(r => r.json())
+      .then(headers => { categoryHeaders = headers; });
+
+    // Load Offers
+    fetch('offers.json')
+      .then(r => r.json())
+      .then(offers => { allOffers = offers; });
+
+    // Category button logic
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const category = this.dataset.category;
+        renderCategoryHeader(category);
+        renderProducts(category);
+        renderOffers();
+      });
+    });
+
+    function renderCategoryHeader(category) {
+      const headerEl = document.getElementById('category-header');
+      let header = categoryHeaders[category];
+      if (header) {
+        let html = `<div class="cat-header-content">`;
+        if (header.image) {
+          html += `<img src="${header.image}" class="cat-header-img" alt="${category}">`;
+        }
+        html += `<div class="cat-header-text"><h2>${header.title || category}</h2><p>${header.text || ''}</p></div></div>`;
+        headerEl.innerHTML = html;
+        headerEl.style.display = "flex";
+      } else {
+        headerEl.style.display = "none";
+      }
+    }
+
+    function renderProducts(category) {
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
+      const toShow = allProducts.filter(p => p.category === category);
+      if (toShow.length === 0) {
+        container.innerHTML = '<p style="color: #bb3952; text-align:center;">No products found in this category.</p>';
+        return;
+      }
+      toShow.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <div class="img-wrap">
+            <img src="${product.image}" alt="${product.name}">
+          </div>
+          <div class="prod-info">
+            <span class="prod-name">${product.name}</span>
+            <span class="prod-cat">${product.category.split('/')[1]?.trim() || product.category}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderOffers() {
+      const offersSection = document.getElementById('offers-section');
+      const offersList = document.getElementById('offers-list');
+      offersList.innerHTML = '';
+      if (!allOffers.length) {
+        offersSection.style.display = 'none';
+        return;
+      }
+      allOffers.forEach(offer => {
+        let offerHtml = `<div class="offer-card">`;
+        if (offer.image) offerHtml += `<img src="${offer.image}" alt="Offer" class="offer-img">`;
+        offerHtml += `<div class="offer-text"><h3>${offer.title || 'Special Offer'}</h3><p>${offer.text || ''}</p></div></div>`;
+        offersList.innerHTML += offerHtml;
+      });
+      offersSection.style.display = 'flex';
+    }
+  </script>
 </body>
+</html>
