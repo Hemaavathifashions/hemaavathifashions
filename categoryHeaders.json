@@ -1,0 +1,27 @@
+{
+  "Women / Sarees": {
+    "title": "Sarees Collection",
+    "text": "Sarees that blend tradition and style. Explore our vibrant and elegant sarees perfect for every occasion.",
+    "image": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=300&q=80"
+  },
+  "Women / Nighties": {
+    "title": "Nighties Collection",
+    "text": "Comfort meets elegance! Discover our soft, beautiful nighties for restful nights.",
+    "image": "https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=facearea&w=300&q=80"
+  },
+  "Women / Panties": {
+    "title": "Panties Collection",
+    "text": "Stay comfortable all day with our premium range of ladies' panties in various styles.",
+    "image": "https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?auto=format&fit=facearea&w=300&q=80"
+  },
+  "Men / Vests": {
+    "title": "Vests Collection",
+    "text": "Classic and comfortable vests for men, suitable for everyday wear.",
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=facearea&w=300&q=80"
+  },
+  "Kids / Nighties": {
+    "title": "Kids Wear Collection",
+    "text": "Adorable and comfy nighties and more for kids. Let your little ones sleep in style!",
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=300&q=80"
+  }
+}
