@@ -28,7 +28,6 @@
 
   <!-- Category Buttons -->
   <section class="categories">
-    <button class="category-btn active" data-category="All">All</button>
     <button class="category-btn" data-category="Women / Sarees">Sarees</button>
     <button class="category-btn" data-category="Women / Nighties">Nighties</button>
     <button class="category-btn" data-category="Women / Panties">Panties</button>
@@ -36,10 +35,19 @@
     <button class="category-btn" data-category="Kids / Nighties">Kids Wear</button>
   </section>
 
+  <!-- Category Header -->
+  <section id="category-header" class="category-header" style="display:none;"></section>
+
   <!-- Product Grid -->
   <main>
     <div id="product-list" class="product-grid"></div>
   </main>
+
+  <!-- Current Offers -->
+  <section id="offers-section" class="offers-section" style="display:none;">
+    <h2>Current Offers</h2>
+    <div id="offers-list" class="offers-list"></div>
+  </section>
 
   <!-- Footer -->
   <footer>
@@ -57,25 +65,59 @@
   </footer>
 
   <script>
-    // Fetch and display products
     let allProducts = [];
-    fetch('products.json')
-      .then(response => response.json())
-      .then(products => {
-        allProducts = products;
-        renderProducts('All');
-      });
+    let categoryHeaders = {};
+    let allOffers = [];
 
-    // Render products by category
+    // Load Products
+    fetch('products.json')
+      .then(r => r.json())
+      .then(products => { allProducts = products; });
+
+    // Load Category Headers
+    fetch('categoryHeaders.json')
+      .then(r => r.json())
+      .then(headers => { categoryHeaders = headers; });
+
+    // Load Offers
+    fetch('offers.json')
+      .then(r => r.json())
+      .then(offers => { allOffers = offers; });
+
+    // Category button logic
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const category = this.dataset.category;
+        renderCategoryHeader(category);
+        renderProducts(category);
+        renderOffers();
+      });
+    });
+
+    function renderCategoryHeader(category) {
+      const headerEl = document.getElementById('category-header');
+      let header = categoryHeaders[category];
+      if (header) {
+        let html = `<div class="cat-header-content">`;
+        if (header.image) {
+          html += `<img src="${header.image}" class="cat-header-img" alt="${category}">`;
+        }
+        html += `<div class="cat-header-text"><h2>${header.title || category}</h2><p>${header.text || ''}</p></div></div>`;
+        headerEl.innerHTML = html;
+        headerEl.style.display = "block";
+      } else {
+        headerEl.style.display = "none";
+      }
+    }
+
     function renderProducts(category) {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
-      let toShow = allProducts;
-      if (category && category !== 'All') {
-        toShow = allProducts.filter(p => p.category === category);
-      }
+      const toShow = allProducts.filter(p => p.category === category);
       if (toShow.length === 0) {
-        container.innerHTML = '<p style="color: #bb3952;">No products found in this category.</p>';
+        container.innerHTML = '<p style="color: #bb3952; text-align:center;">No products found in this category.</p>';
         return;
       }
       toShow.forEach(product => {
@@ -94,14 +136,22 @@
       });
     }
 
-    // Category button filtering
-    document.querySelectorAll('.category-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        renderProducts(this.dataset.category);
+    function renderOffers() {
+      const offersSection = document.getElementById('offers-section');
+      const offersList = document.getElementById('offers-list');
+      offersList.innerHTML = '';
+      if (!allOffers.length) {
+        offersSection.style.display = 'none';
+        return;
+      }
+      allOffers.forEach(offer => {
+        let offerHtml = `<div class="offer-card">`;
+        if (offer.image) offerHtml += `<img src="${offer.image}" alt="Offer" class="offer-img">`;
+        offerHtml += `<div class="offer-text"><h3>${offer.title || 'Special Offer'}</h3><p>${offer.text || ''}</p></div></div>`;
+        offersList.innerHTML += offerHtml;
       });
-    });
+      offersSection.style.display = 'block';
+    }
   </script>
 </body>
 </html>
