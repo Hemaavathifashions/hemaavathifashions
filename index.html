@@ -8,48 +8,47 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="page-container">
-    <div class="content-wrapper">
-      <header>
-        <div class="header-content">
-          <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo">
-          <nav>
-            <a href="about.html">About Us</a>
-            <a href="contact.html">Contact</a>
-            <a href="policy.html">Policy</a>
-            <a href="https://wa.me/919492324225" class="whatsapp-btn" target="_blank" title="WhatsApp">
-              <i class="fab fa-whatsapp"></i>
-            </a>
-          </nav>
-        </div>
-      </header>
+  <div class="background-design"></div>
+  <div class="center-content">
+    <header>
+      <div class="header-content">
+        <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo">
+        <nav>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+          <a href="policy.html">Policy</a>
+          <a href="https://wa.me/919492324225" class="whatsapp-btn" target="_blank" title="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+          </a>
+        </nav>
+      </div>
+    </header>
 
-      <section class="hero">
-        <div class="hero-content">
-          <h1>Welcome to <span class="brand">Hemaavathi Fashions</span></h1>
-          <p>Trendy collections for Women, Men, and Kids at affordable prices.</p>
-        </div>
-      </section>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Welcome to <span class="brand">Hemaavathi Fashions</span></h1>
+        <p>Trendy collections for Women, Men, and Kids at affordable prices.</p>
+      </div>
+    </section>
 
-      <section class="categories">
-        <button class="category-btn" data-category="Women / Sarees">Sarees</button>
-        <button class="category-btn" data-category="Women / Nighties">Nighties</button>
-        <button class="category-btn" data-category="Women / Panties">Panties</button>
-        <button class="category-btn" data-category="Men / Vests">Vests</button>
-        <button class="category-btn" data-category="Kids / Nighties">Kids Wear</button>
-      </section>
+    <section class="categories">
+      <button class="category-btn" data-category="Women / Sarees">Sarees</button>
+      <button class="category-btn" data-category="Women / Nighties">Nighties</button>
+      <button class="category-btn" data-category="Women / Panties">Panties</button>
+      <button class="category-btn" data-category="Men / Vests">Vests</button>
+      <button class="category-btn" data-category="Kids / Nighties">Kids Wear</button>
+    </section>
 
-      <section id="category-header" class="category-header" style="display:none;"></section>
+    <section id="category-header" class="category-header" style="display:none;"></section>
 
-      <main>
-        <div id="product-list" class="product-grid"></div>
-      </main>
+    <main>
+      <div id="product-list" class="product-grid"></div>
+    </main>
 
-      <section id="offers-section" class="offers-section" style="display:none;">
-        <h2>Current Offers</h2>
-        <div id="offers-list" class="offers-list"></div>
-      </section>
-    </div>
+    <section id="offers-section" class="offers-section" style="display:none;">
+      <h2>Current Offers</h2>
+      <div id="offers-list" class="offers-list"></div>
+    </section>
 
     <footer>
       <div class="footer-content">
@@ -67,7 +66,6 @@
   </div>
 
   <script>
-    // (Keep the existing JavaScript exactly the same)
     let allProducts = [];
     let categoryHeaders = {};
     let allOffers = [];
