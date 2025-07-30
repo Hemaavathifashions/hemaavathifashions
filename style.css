@@ -120,6 +120,41 @@ nav a:focus {
   transform: translateY(-2px) scale(1.06);
 }
 
+/* CATEGORY HEADER */
+.category-header {
+  max-width: 950px;
+  margin: 2rem auto 0 auto;
+  display: flex;
+  justify-content: center;
+}
+.cat-header-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: #f8f3fa;
+  border-radius: var(--radius);
+  box-shadow: var(--prod-shadow);
+  padding: 1.3rem 2.5rem;
+}
+.cat-header-img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(150, 57, 82, 0.07);
+}
+.cat-header-text h2 {
+  margin: 0 0 0.7rem 0;
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+.cat-header-text p {
+  margin: 0;
+  font-size: 1.07rem;
+  color: #444;
+}
+
 /* PRODUCT GRID */
 main {
   max-width: 1200px;
@@ -188,6 +223,56 @@ main {
   opacity: 0.93;
 }
 
+/* OFFERS */
+.offers-section {
+  max-width: 950px;
+  margin: 0 auto 2.5rem auto;
+  padding: 2rem 1rem;
+  background: #fff6fa;
+  border-radius: var(--radius);
+  box-shadow: var(--prod-shadow);
+}
+.offers-section h2 {
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 1.3rem;
+  letter-spacing: 0.02em;
+}
+.offers-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+.offer-card {
+  background: #fff;
+  border-radius: 13px;
+  box-shadow: 0 3px 12px 0 rgba(180,57,82,0.09);
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 1.2rem 1.2rem 1rem;
+  min-width: 270px;
+  max-width: 390px;
+}
+.offer-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 11px;
+  background: #fff;
+}
+.offer-text h3 {
+  margin: 0 0 0.3rem 0;
+  font-size: 1.11rem;
+  color: var(--primary);
+}
+.offer-text p {
+  margin: 0;
+  font-size: 0.97rem;
+  color: #444;
+}
+
 /* FOOTER */
 footer {
   background: var(--footer-bg);
@@ -231,6 +316,10 @@ footer {
   color: #232323;
 }
 
+@media (max-width: 1050px) {
+  .cat-header-content, .offers-list { flex-direction: column; align-items: flex-start; gap:1.2rem;}
+  .cat-header-img { margin-bottom: 1rem;}
+}
 @media (max-width: 900px) {
   .header-content { flex-direction: column; align-items: flex-start; gap: 0.7rem; }
   nav { gap: 1rem; }
@@ -240,7 +329,6 @@ footer {
   main { padding: 1rem 0.2rem; }
   .product-grid { gap: 1.1rem; }
 }
-
 @media (max-width: 650px) {
   .hero h1 { font-size: 1.25rem; }
   .logo { height: 38px; }
