@@ -7,63 +7,43 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Header & Navigation -->
-  <header class="header">
-    <div class="container nav-flex">
-      <a href="index.html" class="logo-link">
-        <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo">
-      </a>
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo">
       <nav>
-        <input type="checkbox" id="nav-toggle" class="nav-toggle">
-        <label for="nav-toggle" class="nav-toggle-label">
-          <span></span>
-        </label>
-        <ul class="main-menu">
-          <li><a href="index.html" class="active">Home</a></li>
-          <li>
-            <a href="#">Women</a>
-            <ul class="submenu">
-              <li><a href="#">Sarees</a></li>
-              <li><a href="#">Nighties</a></li>
-              <li><a href="#">Panties</a></li>
-            </ul>
-          </li>
-          <li>
-            <a href="#">Men</a>
-            <ul class="submenu">
-              <li><a href="#">Vests</a></li>
-            </ul>
-          </li>
-          <li><a href="#">Kids</a></li>
-          <li><a href="#">Collections</a></li>
-          <li><a href="#">Sale</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-        </ul>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="policy.html">Policy</a>
+        <a href="https://wa.me/919492324225" class="whatsapp-btn" target="_blank" title="WhatsApp"><img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp" /></a>
       </nav>
-      <a href="https://wa.me/919492324225" class="whatsapp-chat" target="_blank" title="Chat with us on WhatsApp">
-        <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp Chat"/>
-      </a>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to <span class="brand">Hemaavathi Fashions</span></h1>
+    <p>Trendy collections for Women, Men, and Kids at affordable prices.</p>
+  </section>
+
+  <!-- Category Buttons -->
+  <section class="categories">
+    <button class="category-btn active" data-category="All">All</button>
+    <button class="category-btn" data-category="Women / Sarees">Sarees</button>
+    <button class="category-btn" data-category="Women / Nighties">Nighties</button>
+    <button class="category-btn" data-category="Women / Panties">Panties</button>
+    <button class="category-btn" data-category="Men / Vests">Vests</button>
+    <button class="category-btn" data-category="Kids / Nighties">Kids Wear</button>
+  </section>
+
+  <!-- Product Grid -->
   <main>
-    <section class="hero-section">
-      <div class="hero-content">
-        <h1>Discover the Latest Trends<br><span class="brand-highlight">Hemaavathi Fashions</span></h1>
-        <p>Shop for your family at affordable prices. Explore our beautiful collections for Women, Men, and Kids.</p>
-      </div>
-    </section>
-    <section class="collection-section">
-      <h2 class="section-title">Collections</h2>
-      <div id="product-list" class="product-grid"></div>
-    </section>
+    <div id="product-list" class="product-grid"></div>
   </main>
 
   <!-- Footer -->
   <footer>
-    <div class="footer-container">
+    <div class="footer-content">
       <div class="footer-brand">
         <img src="assets/logo.png" alt="Logo" class="footer-logo">
         <span>© 2025 Hemaavathi Fashions</span>
@@ -73,32 +53,55 @@
         <a href="https://www.facebook.com/profile.php?id=61574970737394" target="_blank">Facebook</a>
         <a href="https://www.youtube.com/@Hemaavathifashions" target="_blank">YouTube</a>
       </div>
-      <div class="footer-policy">
-        <a href="policy.html">Return / Refund Policy</a>
-      </div>
     </div>
   </footer>
 
-  <!-- Product Loader -->
   <script>
+    // Fetch and display products
+    let allProducts = [];
     fetch('products.json')
       .then(response => response.json())
       .then(products => {
-        const container = document.getElementById('product-list');
-        container.innerHTML = '';
-        products.forEach(product => {
-          const card = document.createElement('div');
-          card.className = 'product-card';
-          card.innerHTML = `
-            <div class="product-image-wrap">
-              <img src="${product.image}" alt="${product.name}" class="product-image"/>
-              <span class="category-badge">${product.category}</span>
-            </div>
-            <h3 class="product-name">${product.name}</h3>
-          `;
-          container.appendChild(card);
-        });
+        allProducts = products;
+        renderProducts('All');
       });
+
+    // Render products by category
+    function renderProducts(category) {
+      const container = document.getElementById('product-list');
+      container.innerHTML = '';
+      let toShow = allProducts;
+      if (category && category !== 'All') {
+        toShow = allProducts.filter(p => p.category === category);
+      }
+      if (toShow.length === 0) {
+        container.innerHTML = '<p style="color: #bb3952;">No products found in this category.</p>';
+        return;
+      }
+      toShow.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <div class="img-wrap">
+            <img src="${product.image}" alt="${product.name}">
+          </div>
+          <div class="prod-info">
+            <span class="prod-name">${product.name}</span>
+            <span class="prod-cat">${product.category.split('/')[1]?.trim() || product.category}</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Category button filtering
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        renderProducts(this.dataset.category);
+      });
+    });
   </script>
 </body>
 </html>
