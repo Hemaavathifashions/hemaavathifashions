@@ -193,6 +193,43 @@ header {
   box-shadow: 0 5px 16px rgba(251,191,36,0.5);
 }
 
+/* Special Up button */
+.nav-up-btn {
+  padding: 8px 22px;
+  background: #ef4444; /* Red */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-right: 10px;
+  box-shadow: 0 3px 8px rgba(239,68,68,0.6);
+  transition: background 0.3s;
+}
+
+.nav-up-btn:hover {
+  background: #b91c1c; /* Darker red */
+  box-shadow: 0 5px 16px rgba(185,28,28,0.7);
+}
+
+/* Special Home button */
+.nav-home-btn {
+  padding: 8px 22px;
+  background: #2563eb; /* Blue */
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(37,99,235,0.6);
+  transition: background 0.3s;
+}
+
+.nav-home-btn:hover {
+  background: #1e40af; /* Darker blue */
+  box-shadow: 0 5px 16px rgba(30,64,175,0.7);
+}
+
 /* Filter and sort bar */
 .filter-sort-bar {
   display: flex;
