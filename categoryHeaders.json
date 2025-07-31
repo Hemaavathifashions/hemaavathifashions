@@ -1,32 +1,22 @@
 {
-  "Women / Sarees": {
-    "title": "Sarees Collection",
-    "text": "Sarees that blend tradition and style. Explore our vibrant and elegant sarees perfect for every occasion.",
-    "image": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=facearea&w=300&q=80"
-  },
-  "Women / Nighties": {
-    "title": "Nighties Collection",
-    "text": "Comfort meets elegance! Discover our soft, beautiful nighties for restful nights.",
-    "image": "https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?auto=format&fit=facearea&w=300&q=80"
-  },
-  "Women / Womens Wear": {
-    "title": "Women's Wear Collection",
+  "Women": {
+    "title": "Women's Collection",
     "text": "Stylish and comfortable clothing for women of all ages.",
     "image": "https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=facearea&w=300&q=80"
   },
-  "Men / Mens Wear": {
-    "title": "Men's Wear Collection",
+  "Men": {
+    "title": "Men's Collection",
     "text": "Classic and contemporary styles for the modern man.",
     "image": "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=facearea&w=300&q=80"
+  },
+  "Kids": {
+    "title": "Kids Collection",
+    "text": "Adorable and comfy clothes for kids. Let your little ones dress in style!",
+    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=300&q=80"
   },
   "Handlooms": {
     "title": "Handloom Collection",
     "text": "Authentic handloom products showcasing traditional craftsmanship.",
     "image": "https://images.unsplash.com/photo-1563170351-be82bc888aa4?auto=format&fit=facearea&w=300&q=80"
-  },
-  "Kids / Nighties": {
-    "title": "Kids Wear Collection",
-    "text": "Adorable and comfy nighties and more for kids. Let your little ones sleep in style!",
-    "image": "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=300&q=80"
   }
 }
