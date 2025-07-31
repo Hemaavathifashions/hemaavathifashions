@@ -4,312 +4,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hemaavathi Fashions</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="background-design"></div>
-  <div class="center-content">
-    <header>
-      <div class="header-content">
-        <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo">
-      </div>
-    </header>
-
-    <section class="hero">
-      <div class="hero-content">
-        <h1>Welcome to <span style="color: var(--accent)">Hemaavathi Fashions</span></h1>
-        <p>Discover trendy collections for Women, Men, and Kids at affordable prices</p>
-      </div>
+  <header>
+    <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo">
+    <nav class="navbar">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="policy.html">Policies</a>
+    </nav>
+  </header>
+  <div class="main-content">
+    <section class="category-header">
+      <h1>Welcome to Hemaavathi Fashions</h1>
+      <p>Discover fashionable collections for everyone—<span style="color:var(--primary)">Women</span>, <span style="color:var(--primary)">Men</span>, <span style="color:var(--primary)">Kids</span>, and <span style="color:var(--primary)">Handlooms</span>—at great prices.</p>
     </section>
-
     <section class="categories">
-      <div class="category-nav">
-        <div class="pathway" id="pathway">
-          <a href="#" onclick="navigateTo([])">Home</a>
-        </div>
-        <div class="nav-level" id="level-1"></div>
-        <div class="nav-level" id="level-2"></div>
-        <div class="nav-level" id="level-3"></div>
-        <div class="nav-level" id="level-4"></div>
+      <div class="category-card" onclick="window.location='category.html?Women'">
+        <img src="assets/women.png" alt="Women">
+        <h2>Women</h2>
+        <p>Trendy sarees, dress materials, and more.</p>
+      </div>
+      <div class="category-card" onclick="window.location='category.html?Men'">
+        <img src="assets/men.png" alt="Men">
+        <h2>Men</h2>
+        <p>Casual & classic styles for modern men.</p>
+      </div>
+      <div class="category-card" onclick="window.location='category.html?Kids'">
+        <img src="assets/kids.png" alt="Kids">
+        <h2>Kids</h2>
+        <p>Comfortable and fun kidswear.</p>
+      </div>
+      <div class="category-card" onclick="window.location='category.html?Handlooms'">
+        <img src="assets/handloom.png" alt="Handlooms">
+        <h2>Handlooms</h2>
+        <p>Traditional quality towels and bedding.</p>
       </div>
     </section>
-
-    <section id="category-header" class="category-header"></section>
-
-    <main>
-      <div id="product-list" class="product-grid"></div>
-    </main>
-
-    <section id="offers-section" class="offers-section">
-      <h2>Current Offers</h2>
-      <div id="offers-list" class="offers-list"></div>
+    <section style="margin:40px 0;">
+      <h2 style="text-align:center;color:var(--secondary)">Current Offers</h2>
+      <ul>
+        <li>Grab 4 high quality cotton-dress materials for just ₹1,000</li>
+        <li>Flat 40% discount on all sarees</li>
+      </ul>
     </section>
   </div>
-
   <footer>
-    <div class="footer-content">
-      <div class="footer-links-social">
-        <div class="footer-links">
-          <a href="about.html">About Us</a>
-          <a href="contact.html">Contact</a>
-          <a href="policy.html">Policy</a>
-          <a href="https://wa.me/919492324225" class="whatsapp-btn" target="_blank">
-            <i class="fab fa-whatsapp"></i> WhatsApp
-          </a>
-        </div>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/hemaavathi__fashions" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.facebook.com/profile.php?id=61574970737394" target="_blank"><i class="fab fa-facebook-f"></i></a>
-          <a href="https://www.youtube.com/@Hemaavathifashions" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
-      </div>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="policy.html">Policies</a>
+      <a href="https://wa.me/919492324225" target="_blank">WhatsApp</a>
     </div>
+    <div class="footer-social">
+      <a href="https://instagram.com/hemaavathi__fashions" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://youtube.com/@Hemaavathifashions" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div style="margin-top:18px;font-size:0.9em;">&copy; 2025 Hemaavathi Fashions</div>
   </footer>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      let allProducts = [];
-      let categoryHeaders = {};
-      let allOffers = [];
-      let subCategories = {};
-      let currentPath = [];
-
-      // Load all data
-      Promise.all([
-        fetch('products.json').then(r => r.json()).catch(() => []),
-        fetch('categoryHeaders.json').then(r => r.json()).catch(() => {}),
-        fetch('offers.json').then(r => r.json()).catch(() => []),
-        fetch('subCategories.json').then(r => r.json()).catch(() => {})
-      ])
-      .then(([products, headers, offers, subCats]) => {
-        allProducts = products || [];
-        categoryHeaders = headers || {};
-        allOffers = offers || [];
-        subCategories = subCats || {};
-        
-        renderOffers();
-        renderNavigation();
-        renderProducts();
-        updatePathway();
-      })
-      .catch(error => {
-        console.error('Error loading data:', error);
-        // Initialize with empty data if files are missing
-        allProducts = [];
-        categoryHeaders = {};
-        allOffers = [];
-        subCategories = {};
-        renderOffers();
-        renderNavigation();
-        renderProducts();
-        updatePathway();
-      });
-
-      function navigateTo(path) {
-        currentPath = path;
-        updatePathway();
-        renderNavigation();
-        renderProducts();
-        renderCategoryHeader();
-      }
-
-      function updatePathway() {
-        const pathwayEl = document.getElementById('pathway');
-        let html = '<a href="#" onclick="event.preventDefault(); navigateTo([])">Home</a>';
-        
-        currentPath.forEach((segment, index) => {
-          html += `<span class="separator">/</span>
-                  <a href="#" onclick="event.preventDefault(); navigateTo(${JSON.stringify(currentPath.slice(0, index + 1))})">
-                    ${segment}
-                  </a>`;
-        });
-        
-        pathwayEl.innerHTML = html;
-      }
-
-      function renderNavigation() {
-        // Level 1 - Main Categories
-        const level1 = document.getElementById('level-1');
-        level1.innerHTML = '';
-        
-        Object.keys(categoryHeaders).forEach(category => {
-          const btn = document.createElement('button');
-          btn.className = 'level-1-btn';
-          btn.textContent = category;
-          if (currentPath[0] === category) {
-            btn.classList.add('selected');
-          }
-          btn.onclick = () => navigateTo([category]);
-          level1.appendChild(btn);
-        });
-
-        // Level 2 - Sub Categories
-        const level2 = document.getElementById('level-2');
-        level2.innerHTML = '';
-        
-        if (currentPath.length >= 1 && subCategories[currentPath[0]]) {
-          Object.keys(subCategories[currentPath[0]]).forEach(subCat => {
-            const btn = document.createElement('button');
-            btn.className = 'level-2-btn';
-            btn.textContent = subCat;
-            if (currentPath[1] === subCat) {
-              btn.classList.add('selected');
-            } else if (currentPath[0] && currentPath[0] === currentPath[0]) {
-              btn.classList.add('sub-selected');
-            }
-            btn.onclick = () => navigateTo([currentPath[0], subCat]);
-            level2.appendChild(btn);
-          });
-        }
-
-        // Level 3 - Variants or Brands
-        const level3 = document.getElementById('level-3');
-        level3.innerHTML = '';
-        
-        if (currentPath.length >= 2 && subCategories[currentPath[0]]?.[currentPath[1]]) {
-          const variants = subCategories[currentPath[0]][currentPath[1]];
-          
-          if (Array.isArray(variants)) {
-            variants.forEach(variant => {
-              const btn = document.createElement('button');
-              btn.className = 'level-3-btn';
-              btn.textContent = variant;
-              if (currentPath[2] === variant) {
-                btn.classList.add('selected');
-              }
-              btn.onclick = () => navigateTo([...currentPath.slice(0, 2), variant]);
-              level3.appendChild(btn);
-            });
-          } else if (typeof variants === 'object') {
-            Object.keys(variants).forEach(brand => {
-              const btn = document.createElement('button');
-              btn.className = 'level-3-btn';
-              btn.textContent = brand;
-              if (currentPath[2] === brand) {
-                btn.classList.add('selected');
-              }
-              btn.onclick = () => navigateTo([...currentPath.slice(0, 2), brand]);
-              level3.appendChild(btn);
-            });
-          }
-        }
-
-        // Level 4 - Sizes
-        const level4 = document.getElementById('level-4');
-        level4.innerHTML = '';
-        
-        if (currentPath.length >= 3) {
-          const variants = subCategories[currentPath[0]]?.[currentPath[1]];
-          if (variants && typeof variants === 'object' && !Array.isArray(variants)) {
-            const sizes = variants[currentPath[2]];
-            if (Array.isArray(sizes)) {
-              sizes.forEach(size => {
-                const btn = document.createElement('button');
-                btn.className = 'level-3-btn';
-                btn.textContent = size;
-                if (currentPath[3] === size) {
-                  btn.classList.add('selected');
-                }
-                btn.onclick = () => navigateTo([...currentPath.slice(0, 3), size]);
-                level4.appendChild(btn);
-              });
-            }
-          }
-        }
-      }
-
-      function renderCategoryHeader() {
-        const headerEl = document.getElementById('category-header');
-        if (currentPath.length === 0) {
-          headerEl.style.display = "none";
-          return;
-        }
-        
-        const header = categoryHeaders[currentPath[0]];
-        if (header) {
-          headerEl.innerHTML = `
-            <div class="cat-header-text">
-              <h2>${header.title || currentPath[0]}</h2>
-              <p>${header.text || ''}</p>
-            </div>
-          `;
-          headerEl.style.display = "block";
-        } else {
-          headerEl.style.display = "none";
-        }
-      }
-
-      function renderProducts() {
-        const container = document.getElementById('product-list');
-        container.innerHTML = '';
-        
-        if (currentPath.length === 0) {
-          container.innerHTML = `
-            <div style="grid-column:1/-1; text-align:center; padding:40px;">
-              <h3 style="color:var(--primary)">Browse Our Collections</h3>
-              <p style="color:#666">Select a category to view products</p>
-            </div>
-          `;
-          return;
-        }
-        
-        const categoryPath = currentPath.join('/');
-        const toShow = allProducts.filter(p => p.category.startsWith(categoryPath));
-        
-        if (toShow.length === 0) {
-          container.innerHTML = `
-            <div style="grid-column:1/-1; text-align:center; padding:40px;">
-              <h3 style="color:var(--primary)">No Products Found</h3>
-              <p style="color:#666">We couldn't find products in this category</p>
-            </div>
-          `;
-          return;
-        }
-        
-        toShow.forEach(product => {
-          const card = document.createElement('div');
-          card.className = 'product-card';
-          card.innerHTML = `
-            <div class="img-wrap">
-              <img src="${product.image}" alt="${product.name}" loading="lazy">
-            </div>
-            <div class="prod-info">
-              <span class="prod-name">${product.name}</span>
-              <span class="prod-price">₹${product.price}</span>
-              ${product.sizes ? `<span class="prod-sizes">Sizes: ${product.sizes.join(', ')}</span>` : ''}
-            </div>
-          `;
-          container.appendChild(card);
-        });
-      }
-
-      function renderOffers() {
-        const offersSection = document.getElementById('offers-section');
-        const offersList = document.getElementById('offers-list');
-        offersList.innerHTML = '';
-        
-        if (!allOffers || allOffers.length === 0) {
-          offersSection.style.display = 'none';
-          return;
-        }
-        
-        offersSection.style.display = 'block';
-        allOffers.forEach(offer => {
-          const offerEl = document.createElement('div');
-          offerEl.className = 'offer-item';
-          offerEl.innerHTML = `
-            <h3>${offer.title || 'Special Offer'}</h3>
-            ${offer.text ? `<p>${offer.text}</p>` : ''}
-          `;
-          offersList.appendChild(offerEl);
-        });
-      }
-      
-      window.navigateTo = function(path) {
-        navigateTo(path);
-      };
-    });
-  </script>
 </body>
 </html>
