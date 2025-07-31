@@ -20,11 +20,13 @@
     "Dress Materials": ["Cotton", "Silk"],
     "Dresses": ["S", "M", "L", "XL"],
     "Nighties": ["Flora-L", "XL", "XXL"],
-    "Panties": ["Aswati-80", "85", "90"],
     "Bra": {
       "Jockey": ["S", "M", "L", "XL"],
       "Aswati": ["S", "M", "L", "XL"]
     },
+     "Panties":{
+       "Aswati": ["70","85", "90"]
+     },
     "Leggings": {
       "Half": ["80", "85", "90"],
       "Full": ["L", "M", "XL"]
