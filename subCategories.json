@@ -1,35 +1,74 @@
 {
-  "Women": {
-    "Sarees": ["Silk Sarees", "Fancy Sarees", "Pattu"],
-    "Dress Materials": ["Cotton", "Silk"],
-    "Dresses": ["S", "M", "L", "XL"],
-    "Nighties": ["Flora-L", "XL", "XXL"],
-    "Panties": ["Aswati-80", "85", "90"],
-    "Bra": ["Jockey-S", "M", "L", "XL", "Aswati-S", "M", "L", "XL"],
-    "Leggings": ["Half-80", "85", "90", "Full-L", "M", "XL"],
-    "Jacket Piece": ["100/m", "200/M"]
-  },
   "Men": {
     "Shirts Cloth": [],
     "T-Shirts": {
       "Blue Tyga": ["S", "M", "L", "XL", "XXL"],
       "Jockey": ["S", "M", "L", "XL"]
     },
-    "Vests": ["Poomex-80", "85", "90", "95", "Jockey-S", "M", "Ramraj-80", "85", "90", "95"],
-    "Trunks": ["Poomex-80", "85", "90", "95", "Jockey-S", "M", "L", "XL"]
+    "Vests": {
+      "Poomex": ["80", "85", "90", "95"],
+      "Jockey": ["S", "M"],
+      "Ramraj": ["80", "85", "90", "95"]
+    },
+    "Trunks": {
+      "Poomex": ["80", "85", "90", "95"],
+      "Jockey": ["S", "M", "L", "XL"]
+    }
+  },
+  "Women": {
+    "Sarees": ["Silk Sarees", "Fancy Sarees", "Pattu"],
+    "Dress Materials": ["Cotton", "Silk"],
+    "Dresses": ["S", "M", "L", "XL"],
+    "Nighties": ["Flora-L", "XL", "XXL"],
+    "Panties": ["Aswati-80", "85", "90"],
+    "Bra": {
+      "Jockey": ["S", "M", "L", "XL"],
+      "Aswati": ["S", "M", "L", "XL"]
+    },
+    "Leggings": {
+      "Half": ["80", "85", "90"],
+      "Full": ["L", "M", "XL"]
+    },
+    "Jacket Piece": ["100/m", "200/M"]
   },
   "Kids": {
     "Boys": {
-      "Vests": ["Poomex-70", "75", "80", "Jockey-S", "M", "L"],
-      "Trunks": ["Poomex-70", "75", "80", "Jockey-S", "M", "L"],
-      "Casuals": ["Milton-80", "85", "Others-S", "L"],
-      "NightWear": ["Jockey-80", "85", "90", "Milton-80", "85", "90", "Essa-80", "85", "90"]
+      "Vests": {
+        "Poomex": ["70", "75", "80"],
+        "Jockey": ["S", "M", "L"]
+      },
+      "Trunks": {
+        "Poomex": ["70", "75", "80"],
+        "Jockey": ["S", "M", "L"]
+      },
+      "Casuals": {
+        "Milton": ["80", "85"],
+        "Others": ["S", "L"]
+      },
+      "NightWear": {
+        "Jockey": ["80", "85", "90"],
+        "Milton": ["80", "85", "90"],
+        "Essa": ["80", "85", "90"]
+      }
     },
     "Girls": {
-      "Bra": ["Poomex-70", "75", "80", "Jockey-S", "M", "L"],
-      "Panties": ["Poomex-70", "75", "80", "Jockey-S", "M", "L"],
-      "Casuals": ["Milton-80", "85", "Others-S", "L"],
-      "NightWear": ["Jockey-80", "85", "90", "Milton-80", "85", "90", "Essa-80", "85", "90"]
+      "Bra": {
+        "Poomex": ["70", "75", "80"],
+        "Jockey": ["S", "M", "L"]
+      },
+      "Panties": {
+        "Poomex": ["70", "75", "80"],
+        "Jockey": ["S", "M", "L"]
+      },
+      "Casuals": {
+        "Milton": ["80", "85"],
+        "Others": ["S", "L"]
+      },
+      "NightWear": {
+        "Jockey": ["80", "85", "90"],
+        "Milton": ["80", "85", "90"],
+        "Essa": ["80", "85", "90"]
+      }
     }
   },
   "Handlooms": {
