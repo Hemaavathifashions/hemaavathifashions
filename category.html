@@ -14,7 +14,6 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
   />
   <style>
-    /* Additional styles for subcategory and filters */
     .subcategory-nav {
       display: flex;
       flex-wrap: wrap;
@@ -37,7 +36,6 @@
       background: var(--accent);
       color: var(--text);
     }
-  
     .filter-sort-bar {
       display: flex;
       flex-wrap: wrap;
@@ -65,8 +63,27 @@
       flex-wrap: wrap;
       max-width: 300px;
     }
-
-    /* Product grid adjustment to show filtered products */
+    #breadcrumb-nav {
+      margin-bottom: 1rem;
+    }
+    #breadcrumb-nav button {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-weight: 600;
+      cursor: pointer;
+      margin-right: 8px;
+      padding: 0;
+      font-size: 1rem;
+    }
+    #breadcrumb-nav button:hover {
+      text-decoration: underline;
+    }
+    #breadcrumb-nav span.separator {
+      margin-right: 8px;
+      color: var(--accent);
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -81,6 +98,8 @@
   </header>
 
   <main class="main-content">
+    <section id="breadcrumb-nav" aria-label="Breadcrumb navigation"></section>
+
     <section class="category-header" aria-label="Category header">
       <h1 id="category-title">Loading...</h1>
       <p id="category-description"></p>
@@ -138,7 +157,14 @@
   </footer>
 
   <script>
-    // Utilities
+    let currentPath = []; // current navigation path array
+
+    let allProducts = [];
+    let categoryHeaders = {};
+    let subCategories = {};
+    let selectedSizes = new Set();
+    let currentSort = 'default';
+
     function getCategoryFromUrl() {
       const params = new URLSearchParams(window.location.search);
       return params.get('category') || location.search.slice(1) || '';
@@ -158,7 +184,6 @@
     }
 
     function flattenSizes(products) {
-      // Return set of all sizes available among products
       const sizesSet = new Set();
       products.forEach(p => {
         if (Array.isArray(p.sizes)) p.sizes.forEach(s => sizesSet.add(s));
@@ -166,72 +191,120 @@
       return Array.from(sizesSet).sort();
     }
 
-    // Global variables to keep track of state
-    let allProducts = [];
-    let categoryHeaders = {};
-    let subCategories = {};
-    let currentCategory = '';
-    let currentSubCategory = '';
-    let selectedSizes = new Set();
-    let currentSort = 'default';
-
-    // Render subcategories buttons
-    function renderSubcategories() {
-      const container = document.getElementById('subcategory-nav');
+    function renderBreadcrumbs() {
+      const container = document.getElementById('breadcrumb-nav');
       container.innerHTML = '';
 
-      if (!subCategories[currentCategory]) return;
-      const subs = Object.keys(subCategories[currentCategory]);
-      if (!subs.length) return;
-
-      // Add an "All" button to reset subcategory filter
-      const allBtn = document.createElement('button');
-      allBtn.textContent = 'All';
-      allBtn.className = currentSubCategory === '' ? 'subcategory-btn selected' : 'subcategory-btn';
-      allBtn.onclick = () => {
-        currentSubCategory = '';
-        selectedSizes.clear();
-        document.getElementById('sort-select').value = 'default';
-        renderFilterSizes(); 
-        renderProducts();
-        renderSubcategories();
+      const homeLink = document.createElement('button');
+      homeLink.textContent = 'Home';
+      homeLink.onclick = () => {
+        currentPath = [];
+        renderAll();
       };
-      container.appendChild(allBtn);
+      container.appendChild(homeLink);
 
-      subs.forEach(sub => {
+      if (currentPath.length === 0) return;
+
+      currentPath.forEach((segment, idx) => {
+        const sep = document.createElement('span');
+        sep.className = 'separator';
+        sep.textContent = '/';
+        container.appendChild(sep);
+
         const btn = document.createElement('button');
-        btn.textContent = sub;
-        btn.className = sub === currentSubCategory ? 'subcategory-btn selected' : 'subcategory-btn';
+        btn.textContent = segment;
         btn.onclick = () => {
-          currentSubCategory = sub;
-          selectedSizes.clear();
-          document.getElementById('sort-select').value = 'default';
-          renderFilterSizes(); 
-          renderProducts();
-          renderSubcategories();
+          currentPath = currentPath.slice(0, idx + 1);
+          renderAll();
         };
         container.appendChild(btn);
       });
     }
 
-    // Render size filter checkboxes based on currently filtered products
-    function renderFilterSizes() {
+    function getNodeAtCurrentPath() {
+      let node = subCategories;
+      for (const segment of currentPath) {
+        if (node && typeof node === 'object') node = node[segment];
+        else return null;
+      }
+      return node;
+    }
+
+    function renderNavigation() {
+      const container = document.getElementById('subcategory-nav');
+      container.innerHTML = '';
+
+      const node = getNodeAtCurrentPath() || subCategories;
+
+      // Show UP button if not at root
+      if (currentPath.length > 0) {
+        const upBtn = document.createElement('button');
+        upBtn.textContent = '⬆ Up';
+        upBtn.className = 'subcategory-btn';
+        upBtn.onclick = () => {
+          currentPath.pop();
+          selectedSizes.clear();
+          document.getElementById('sort-select').value = 'default';
+          currentSort = 'default';
+          renderAll();
+        };
+        container.appendChild(upBtn);
+      }
+
+      if (!node) {
+        container.innerHTML = '<p>No categories found.</p>';
+        return;
+      }
+
+      if (Array.isArray(node)) {
+        // Showing sizes or final options
+        node.forEach(item => {
+          const btn = document.createElement('button');
+          btn.textContent = item;
+          btn.className = 'subcategory-btn';
+          btn.onclick = () => {
+            currentPath.push(item);
+            selectedSizes.clear();
+            document.getElementById('sort-select').value = 'default';
+            currentSort = 'default';
+            renderAll();
+          };
+          container.appendChild(btn);
+        });
+      } else if (typeof node === 'object') {
+        Object.keys(node).forEach(key => {
+          const btn = document.createElement('button');
+          btn.textContent = key;
+          btn.className = 'subcategory-btn';
+          btn.onclick = () => {
+            currentPath.push(key);
+            selectedSizes.clear();
+            document.getElementById('sort-select').value = 'default';
+            currentSort = 'default';
+            renderAll();
+          };
+          container.appendChild(btn);
+        });
+      }
+    }
+
+    function renderFilters() {
       const container = document.getElementById('size-filters');
       container.innerHTML = '';
 
-      // Filter products by category + subcategory first
-      let filtered = allProducts.filter(p => {
-        if (!p.category) return false;
-        if (!p.category.startsWith(currentCategory)) return false;
-        if (currentSubCategory) {
-          // Check if subcategory is included after main category in category string
-          // E.g. category="Women/Sarees/Pattu", currentSubCategory = "Sarees"
-          return p.category.split('/').slice(1).includes(currentSubCategory);
-        }
-        return true;
-      });
+      // Filter products by current path but exclude size from currentPath if last segment is a size (leaf node)
+      let pathStr = currentPath.join('/');
+      let filterPath = pathStr;
 
-      // Extract sizes available
+      // Check if current path is a leaf size (exists in sizes)
+      const nodeAtPath = getNodeAtCurrentPath();
+      if (Array.isArray(nodeAtPath) || typeof nodeAtPath === 'string') {
+        // last segment is leaf size, so filter by parent path only
+        filterPath = currentPath.slice(0, -1).join('/');
+      }
+
+      const filtered = allProducts.filter(p => p.category.startsWith(filterPath));
+
       const sizes = flattenSizes(filtered);
       if (sizes.length === 0) return;
 
@@ -258,7 +331,6 @@
       });
     }
 
-    // Sort products array according to currentSort
     function sortProducts(products) {
       switch(currentSort) {
         case 'price-asc':
@@ -274,101 +346,96 @@
       }
     }
 
-    // Render filtered + sorted products grid
     function renderProducts() {
       const container = document.getElementById('product-list');
       container.innerHTML = '';
 
-      let filtered = allProducts.filter(p => {
-        if (!p.category) return false;
-        if (!p.category.startsWith(currentCategory)) return false;
+      // Determine category filter string to match products
+      let filterPath = currentPath.join('/');
 
-        if (currentSubCategory) {
-          // Match subcategory after main category
-          if (!p.category.split('/').slice(1).includes(currentSubCategory)) {
-            return false;
-          }
-        }
-
-        // Filter size if any size selected
-        if (selectedSizes.size > 0 && Array.isArray(p.sizes)) {
-          const hasSize = p.sizes.some(s => selectedSizes.has(s));
-          if (!hasSize) return false;
-        }
-
-        return true;
-      });
-
-      if (filtered.length === 0) {
-        container.innerHTML = '<p>No products match the selected filters.</p>';
-        return;
+      // If last segment is a size, strip it to parent path for filtering products
+      const nodeAtPath = getNodeAtCurrentPath();
+      if (Array.isArray(nodeAtPath)) {
+        // at size leaf
+        filterPath = currentPath.slice(0, -1).join('/');
       }
 
+      // Filter products by category start with filterPath
+      let filtered = allProducts.filter(p => p.category.startsWith(filterPath));
+
+      // Apply size filters (only if sizes selected)
+      if (selectedSizes.size > 0) {
+        filtered = filtered.filter(p => p.sizes && p.sizes.some(sz => selectedSizes.has(sz)));
+      }
+
+      // Sort products
       filtered = sortProducts(filtered);
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<p>No products match the current filters.</p>';
+        return;
+      }
 
       filtered.forEach(product => {
         container.appendChild(createProductCard(product));
       });
     }
 
-    async function fetchJson(url) {
-      try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`Failed to load ${url}`);
-        return await res.json();
-      } catch (err) {
-        console.error(err);
-        return null;
+    function renderCategoryHeader() {
+      const titleEl = document.getElementById('category-title');
+      const descEl = document.getElementById('category-description');
+
+      const mainCategory = currentPath.length > 0 ? currentPath[0] : '';
+
+      if (categoryHeaders && mainCategory) {
+        titleEl.textContent = categoryHeaders[mainCategory]?.title || mainCategory;
+        descEl.textContent = categoryHeaders[mainCategory]?.text || '';
+      } else {
+        titleEl.textContent = 'Category';
+        descEl.textContent = '';
       }
     }
 
-    async function loadDataAndRender() {
-      currentCategory = getCategoryFromUrl() || '';
-
-      if (!currentCategory) {
-        document.getElementById('category-title').textContent = 'No Category Selected';
-        document.getElementById('category-description').textContent = 'Please select a category from the home page.';
-        return;
-      }
-
-      document.getElementById('category-title').textContent = 'Loading...';
-      document.getElementById('category-description').textContent = '';
-      document.getElementById('product-list').innerHTML = '';
-      document.getElementById('subcategory-nav').innerHTML = '';
-      document.getElementById('size-filters').innerHTML = '';
-
-      // Fetch all necessary data
-      const [headers, products, subs] = await Promise.all([
-        fetchJson('categoryHeaders.json'),
-        fetchJson('products.json'),
-        fetchJson('subCategories.json'),
-      ]);
-
-      categoryHeaders = headers || {};
-      allProducts = products || [];
-      subCategories = subs || {};
-
-      // Show category header info
-      document.getElementById('category-title').textContent = categoryHeaders[currentCategory]?.title || currentCategory;
-      document.getElementById('category-description').textContent = categoryHeaders[currentCategory]?.text || '';
-
-      // Initialize UI
-      currentSubCategory = '';
-      selectedSizes.clear();
-      currentSort = 'default';
-      document.getElementById('sort-select').value = currentSort;
-
-      renderSubcategories();
-      renderFilterSizes();
+    function renderAll() {
+      renderBreadcrumbs();
+      renderNavigation();
+      renderCategoryHeader();
+      renderFilters();
       renderProducts();
     }
 
-    // Event listeners for sorting
-    window.addEventListener('DOMContentLoaded', () => {
-      loadDataAndRender();
+    async function loadDataAndStart() {
+      try {
+        const [headers, products, subs] = await Promise.all([
+          fetch('categoryHeaders.json').then(r => r.json()),
+          fetch('products.json').then(r => r.json()),
+          fetch('subCategories.json').then(r => r.json()),
+        ]);
+        categoryHeaders = headers;
+        allProducts = products;
+        subCategories = subs;
 
-      const sortSelect = document.getElementById('sort-select');
-      sortSelect.addEventListener('change', e => {
+        // Initialize path with main category from URL param or empty
+        const startCategory = getCategoryFromUrl();
+        if (startCategory && Object.keys(subCategories).includes(startCategory)) {
+          currentPath = [startCategory];
+        } else {
+          currentPath = [];
+        }
+
+        document.getElementById('sort-select').value = currentSort;
+
+        renderAll();
+
+      } catch (e) {
+        console.error('Failed to load data:', e);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadDataAndStart();
+
+      document.getElementById('sort-select').addEventListener('change', e => {
         currentSort = e.target.value;
         renderProducts();
       });
