@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Category - Hemaavathi Fashions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <header>
+    <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo" />
+    <nav class="navbar">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="policy.html">Policies</a>
+    </nav>
+  </header>
+  <div class="main-content">
+    <section class="category-header">
+      <h1 id="category-title">Loading...</h1>
+      <p id="category-description"></p>
+    </section>
+    <section class="product-grid" id="product-list"></section>
+  </div>
+  <footer>
+    <div class="footer-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="policy.html">Policies</a>
+      <a href="https://wa.me/919492324225" target="_blank">WhatsApp</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://instagram.com/hemaavathi__fashions" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://youtube.com/@Hemaavathifashions" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div style="margin-top:18px;font-size:0.9em;">&copy; 2025 Hemaavathi Fashions</div>
+  </footer>
+
+  <script>
+    // Utility to get URL param ?category= or ?Women style
+    function getCategoryFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      // Accept either ?Women or ?category=Women
+      return params.get('category') || location.search.slice(1) || '';
+    }
+
+    async function loadProducts() {
+      const category = getCategoryFromUrl();
+      if (!category) {
+        document.getElementById('category-title').textContent = 'No Category Selected';
+        return;
+      }
+
+      // Load category headers JSON for description
+      const headersResp = await fetch('categoryHeaders.json').catch(() => null);
+      const headers = headersResp ? await headersResp.json() : {};
+
+      // Load products JSON
+      const productsResp = await fetch('products.json').catch(() => null);
+      const products = productsResp ? await productsResp.json() : [];
+
+      // Set category title and description
+      document.getElementById('category-title').textContent = headers[category]?.title || category;
+      document.getElementById('category-description').textContent = headers[category]?.text || '';
+
+      // Filter products starting with selected category (case sensitive)
+      const filteredProducts = products.filter(p => p.category.startsWith(category));
+
+      const productList = document.getElementById('product-list');
+      productList.innerHTML = '';
+
+      if (filteredProducts.length === 0) {
+        productList.innerHTML = '<p>No products found in this category.</p>';
+        return;
+      }
+
+      filteredProducts.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" loading="lazy" />
+          <div class="prod-info">
+            <span class="prod-name">${product.name}</span><br />
+            <span class="prod-price">₹${product.price}</span>
+            ${product.sizes ? `<br/><small>Sizes: ${product.sizes.join(', ')}</small>` : ''}
+          </div>
+        `;
+        productList.appendChild(card);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', loadProducts);
+  </script>
+</body>
+</html>
