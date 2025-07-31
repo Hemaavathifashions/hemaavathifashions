@@ -21,13 +21,6 @@
     "image": "https://i.postimg.cc/8kJZQvXK/cotton-dress.jpg"
   },
   {
-    "name": "Flora Nighty (L)",
-    "category": "Women/Nighties/Flora-L",
-    "price": 499,
-    "sizes": ["L"],
-    "image": "https://i.postimg.cc/8kJZQvXK/nighty.jpg"
-  },
-  {
     "name": "Blue Tyga T-Shirt (XL)",
     "category": "Men/T-Shirts/Blue Tyga/XL",
     "price": 599,
@@ -43,28 +36,28 @@
   },
   {
     "name": "Poomex Vest (85)",
-    "category": "Men/Vests/Poomex-85",
+    "category": "Men/Vests/Poomex/85",
     "price": 349,
     "sizes": ["85"],
     "image": "https://i.postimg.cc/8kJZQvXK/poomex-vest.jpg"
   },
   {
     "name": "Jockey Trunks (M)",
-    "category": "Men/Trunks/Jockey-M",
+    "category": "Men/Trunks/Jockey/M",
     "price": 399,
     "sizes": ["M"],
     "image": "https://i.postimg.cc/8kJZQvXK/jockey-trunk.jpg"
   },
   {
     "name": "Boys Jockey Vest (M)",
-    "category": "Kids/Boys/Vests/Jockey-M",
+    "category": "Kids/Boys/Vests/Jockey/M",
     "price": 299,
     "sizes": ["M"],
     "image": "https://i.postimg.cc/8kJZQvXK/kids-vest.jpg"
   },
   {
     "name": "Girls Poomex Panties (75)",
-    "category": "Kids/Girls/Panties/Poomex-75",
+    "category": "Kids/Girls/Panties/Poomex/75",
     "price": 249,
     "sizes": ["75"],
     "image": "https://i.postimg.cc/8kJZQvXK/kids-panties.jpg"
