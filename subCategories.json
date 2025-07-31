@@ -11,7 +11,10 @@
   },
   "Men": {
     "Shirts Cloth": [],
-    "T-Shirts": ["Blue Tyga-S", "M", "L", "XL", "XXL", "Jockey-S", "M", "L", "XL"],
+    "T-Shirts": {
+      "Blue Tyga": ["S", "M", "L", "XL", "XXL"],
+      "Jockey": ["S", "M", "L", "XL"]
+    },
     "Vests": ["Poomex-80", "85", "90", "95", "Jockey-S", "M", "Ramraj-80", "85", "90", "95"],
     "Trunks": ["Poomex-80", "85", "90", "95", "Jockey-S", "M", "L", "XL"]
   },
