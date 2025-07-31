@@ -5,95 +5,138 @@
   <title>Category - Hemaavathi Fashions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" 
+    rel="stylesheet" 
+  />
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+  />
 </head>
 <body>
   <header>
-    <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo" />
-    <nav class="navbar">
+    <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo" width="160" height="85" />
+    <nav class="navbar" aria-label="Primary navigation">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
       <a href="policy.html">Policies</a>
     </nav>
   </header>
-  <div class="main-content">
-    <section class="category-header">
+
+  <main class="main-content">
+    <section class="category-header" aria-label="Category header">
       <h1 id="category-title">Loading...</h1>
       <p id="category-description"></p>
     </section>
-    <section class="product-grid" id="product-list"></section>
-  </div>
+
+    <section id="product-list" class="product-grid" aria-live="polite" aria-label="Product list">
+      <!-- Products will be dynamically inserted here -->
+    </section>
+  </main>
+
   <footer>
-    <div class="footer-links">
+    <nav class="footer-links" aria-label="Footer navigation">
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
       <a href="policy.html">Policies</a>
-      <a href="https://wa.me/919492324225" target="_blank">WhatsApp</a>
-    </div>
-    <div class="footer-social">
-      <a href="https://instagram.com/hemaavathi__fashions" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://youtube.com/@Hemaavathifashions" target="_blank"><i class="fab fa-youtube"></i></a>
-    </div>
-    <div style="margin-top:18px;font-size:0.9em;">&copy; 2025 Hemaavathi Fashions</div>
+      <a href="https://wa.me/919492324225" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+    </nav>
+
+    <nav class="footer-social" aria-label="Social media links">
+      <a href="https://instagram.com/hemaavathi__fashions" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+        ><i class="fab fa-instagram"></i
+      ></a>
+      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+      <a href="https://youtube.com/@Hemaavathifashions" target="_blank" rel="noopener noreferrer" aria-label="YouTube"
+        ><i class="fab fa-youtube"></i
+      ></a>
+    </nav>
+    <div style="margin-top: 18px; font-size: 0.9em;">&copy; 2025 Hemaavathi Fashions</div>
   </footer>
 
   <script>
-    // Utility to get URL param ?category= or ?Women style
+    // Helper: get category name from URL querystring ?Women or ?category=Women
     function getCategoryFromUrl() {
       const params = new URLSearchParams(window.location.search);
-      // Accept either ?Women or ?category=Women
       return params.get('category') || location.search.slice(1) || '';
     }
 
-    async function loadProducts() {
+    async function fetchJson(url) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Failed to load ${url}`);
+        return await res.json();
+      } catch (err) {
+        console.error(err);
+        return null;
+      }
+    }
+
+    function createProductCard(product) {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" loading="lazy" />
+        <div class="prod-info">
+          <span class="prod-name">${product.name}</span><br />
+          <span class="prod-price">₹${product.price}</span>
+          ${product.sizes ? `<br/><small>Sizes: ${product.sizes.join(', ')}</small>` : ''}
+        </div>`;
+      return card;
+    }
+
+    async function renderCategory() {
       const category = getCategoryFromUrl();
+
+      const titleEl = document.getElementById('category-title');
+      const descEl = document.getElementById('category-description');
+      const productListEl = document.getElementById('product-list');
+
       if (!category) {
-        document.getElementById('category-title').textContent = 'No Category Selected';
+        titleEl.textContent = 'No Category Selected';
+        descEl.textContent = 'Please select a category from the home page.';
         return;
       }
 
-      // Load category headers JSON for description
-      const headersResp = await fetch('categoryHeaders.json').catch(() => null);
-      const headers = headersResp ? await headersResp.json() : {};
+      titleEl.textContent = 'Loading...';
+      descEl.textContent = '';
+      productListEl.innerHTML = '';
 
-      // Load products JSON
-      const productsResp = await fetch('products.json').catch(() => null);
-      const products = productsResp ? await productsResp.json() : [];
+      // Load category headers and products JSON
+      const [headers, products] = await Promise.all([
+        fetchJson('categoryHeaders.json'),
+        fetchJson('products.json'),
+      ]);
 
-      // Set category title and description
-      document.getElementById('category-title').textContent = headers[category]?.title || category;
-      document.getElementById('category-description').textContent = headers[category]?.text || '';
+      titleEl.textContent = headers?.[category]?.title || category;
+      descEl.textContent = headers?.[category]?.text || '';
 
-      // Filter products starting with selected category (case sensitive)
+      if (!products || products.length === 0) {
+        productListEl.innerHTML = '<p>Sorry, products could not be loaded at this time.</p>';
+        return;
+      }
+
+      // Filter products starting with category path (case sensitive)
+      // E.g. category = "Women", product.category = "Women/Sarees/Pattu"
       const filteredProducts = products.filter(p => p.category.startsWith(category));
 
-      const productList = document.getElementById('product-list');
-      productList.innerHTML = '';
-
       if (filteredProducts.length === 0) {
-        productList.innerHTML = '<p>No products found in this category.</p>';
+        productListEl.innerHTML = '<p>No products found in this category.</p>';
         return;
       }
 
+      // Render each product card
       filteredProducts.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        card.innerHTML = `
-          <img src="${product.image}" alt="${product.name}" loading="lazy" />
-          <div class="prod-info">
-            <span class="prod-name">${product.name}</span><br />
-            <span class="prod-price">₹${product.price}</span>
-            ${product.sizes ? `<br/><small>Sizes: ${product.sizes.join(', ')}</small>` : ''}
-          </div>
-        `;
-        productList.appendChild(card);
+        const card = createProductCard(product);
+        productListEl.appendChild(card);
       });
     }
 
-    window.addEventListener('DOMContentLoaded', loadProducts);
+    window.addEventListener('DOMContentLoaded', renderCategory);
   </script>
 </body>
 </html>
