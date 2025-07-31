@@ -411,7 +411,7 @@
     </div>
   </footer>
 
-  <script>
+   <script>
     document.addEventListener('DOMContentLoaded', function() {
       let allProducts = [];
       let categoryHeaders = {};
@@ -462,7 +462,7 @@
       }
 
       function renderNavigation() {
-        // Level 1 - Main Categories (Circular buttons)
+        // Level 1 - Main Categories
         const level1 = document.getElementById('level-1');
         level1.innerHTML = '';
         
@@ -477,7 +477,7 @@
           level1.appendChild(btn);
         });
 
-        // Level 2 - Sub Categories (Rectangular buttons)
+        // Level 2 - Sub Categories
         const level2 = document.getElementById('level-2');
         level2.innerHTML = '';
         
@@ -501,7 +501,7 @@
           }
         }
 
-        // Level 3 - Variants (Small rectangular buttons)
+        // Level 3 - Variants or Sub-Subcategories
         const level3 = document.getElementById('level-3');
         level3.innerHTML = '';
         
@@ -510,22 +510,93 @@
           const subCat = currentPath[1];
           const variants = subCategories[mainCategory][subCat];
           
-          if (Array.isArray(variants)) {
-            variants.forEach(variant => {
-              const btn = document.createElement('button');
-              btn.className = 'level-3-btn';
-              btn.textContent = variant;
-              if (currentPath[2] === variant) {
-                btn.classList.add('selected');
-              } else if (currentPath[1] === subCat) {
-                btn.classList.add('sub-selected');
-              }
-              btn.onclick = () => navigateTo([mainCategory, subCat, variant]);
-              level3.appendChild(btn);
-            });
+          if (variants) {
+            if (Array.isArray(variants)) {
+              // Handle simple arrays of variants
+              variants.forEach(variant => {
+                const btn = document.createElement('button');
+                btn.className = 'level-3-btn';
+                btn.textContent = variant;
+                if (currentPath[2] === variant) {
+                  btn.classList.add('selected');
+                } else if (currentPath[1] === subCat) {
+                  btn.classList.add('sub-selected');
+                }
+                btn.onclick = () => navigateTo([mainCategory, subCat, variant]);
+                level3.appendChild(btn);
+              });
+            } else if (typeof variants === 'object') {
+              // Handle nested objects (like Men's T-Shirts)
+              Object.keys(variants).forEach(brand => {
+                const btn = document.createElement('button');
+                btn.className = 'level-3-btn';
+                btn.textContent = brand;
+                if (currentPath[2] === brand) {
+                  btn.classList.add('selected');
+                } else if (currentPath[1] === subCat) {
+                  btn.classList.add('sub-selected');
+                }
+                btn.onclick = () => navigateTo([mainCategory, subCat, brand]);
+                level3.appendChild(btn);
+              });
+            }
+          }
+        }
+
+        // Level 4 - For sizes under brands (like Men's T-Shirts)
+        const level4 = document.createElement('div');
+        level4.className = 'nav-level';
+        level4.id = 'level-4';
+        document.querySelector('.category-nav').appendChild(level4);
+        level4.innerHTML = '';
+        
+        if (currentPath.length >= 3) {
+          const mainCategory = currentPath[0];
+          const subCat = currentPath[1];
+          const brand = currentPath[2];
+          const variants = subCategories[mainCategory][subCat];
+          
+          if (variants && typeof variants === 'object' && !Array.isArray(variants)) {
+            const sizes = variants[brand];
+            if (Array.isArray(sizes)) {
+              sizes.forEach(size => {
+                const btn = document.createElement('button');
+                btn.className = 'level-3-btn';
+                btn.textContent = size;
+                if (currentPath[3] === size) {
+                  btn.classList.add('selected');
+                }
+                btn.onclick = () => navigateTo([mainCategory, subCat, brand, size]);
+                level4.appendChild(btn);
+              });
+            }
           }
         }
       }
+
+      function renderCategoryHeader() {
+        const headerEl = document.getElementById('category-header');
+        if (currentPath.length === 0) {
+          headerEl.style.display = "none";
+          return;
+        }
+        
+        const mainCategory = currentPath[0];
+        let header = categoryHeaders[mainCategory];
+        
+        if (header) {
+          headerEl.innerHTML = `
+            <div class="cat-header-text">
+              <h2>${header.title || mainCategory}</h2>
+              <p>${header.text || ''}</p>
+            </div>
+          `;
+          headerEl.style.display = "block";
+        } else {
+          headerEl.style.display = "none";
+        }
+      }
+
       function renderProducts() {
         const container = document.getElementById('product-list');
         container.innerHTML = '';
@@ -540,8 +611,21 @@
           return;
         }
         
-        const categoryPath = currentPath.join('/');
-        const toShow = allProducts.filter(p => p.category.startsWith(categoryPath));
+        // Build category path based on current selection
+        let categoryPath = currentPath.join('/');
+        
+        // Special handling for Men's T-Shirts structure
+        if (currentPath.length >= 3 && currentPath[0] === 'Men' && currentPath[1] === 'T-Shirts') {
+          categoryPath = `Men/T-Shirts/${currentPath[2]}`;
+          if (currentPath[3]) {
+            categoryPath += `/${currentPath[3]}`;
+          }
+        }
+        
+        const toShow = allProducts.filter(p => {
+          // Match products with the current category path
+          return p.category.startsWith(categoryPath);
+        });
         
         if (toShow.length === 0) {
           container.innerHTML = `
@@ -593,7 +677,6 @@
         });
       }
       
-      // Make navigateTo available globally
       window.navigateTo = function(path) {
         navigateTo(path);
       };
