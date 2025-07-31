@@ -526,30 +526,6 @@
           }
         }
       }
-
-      function renderCategoryHeader() {
-        const headerEl = document.getElementById('category-header');
-        if (currentPath.length === 0) {
-          headerEl.style.display = "none";
-          return;
-        }
-        
-        const mainCategory = currentPath[0];
-        let header = categoryHeaders[mainCategory];
-        
-        if (header) {
-          let html = `<div class="cat-header-content">`;
-          if (header.image) {
-            html += `<img src="${header.image}" class="cat-header-img" alt="${mainCategory}">`;
-          }
-          html += `<div class="cat-header-text"><h2>${header.title || mainCategory}</h2><p>${header.text || ''}</p></div></div>`;
-          headerEl.innerHTML = html;
-          headerEl.style.display = "flex";
-        } else {
-          headerEl.style.display = "none";
-        }
-      }
-
       function renderProducts() {
         const container = document.getElementById('product-list');
         container.innerHTML = '';
