@@ -51,17 +51,15 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* Navigation bar styles */
-    .nav-bar {
+    /* Separate nav rows with gap */
+    #nav-buttons-top {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       gap: 12px;
-      margin-bottom: 22px;
+      margin-bottom: 12px;
       user-select: none;
     }
-    .nav-btn.up, .nav-btn.home {
-      order: 0;
+    #nav-buttons-top button {
       padding: 8px 22px;
       border-radius: 20px;
       border: none;
@@ -72,20 +70,28 @@
       box-shadow: 0 3px 8px rgba(79,70,229,0.3);
       transition: background 0.3s;
     }
-    .nav-btn.up {
+    #nav-buttons-top button.up {
       background: #ef4444;
     }
-    .nav-btn.up:hover {
+    #nav-buttons-top button.up:hover {
       background: #b91c1c;
     }
-    .nav-btn.home {
+    #nav-buttons-top button.home {
       background: #2563eb;
     }
-    .nav-btn.home:hover {
+    #nav-buttons-top button.home:hover {
       background: #1e40af;
     }
-    .nav-btn.category {
-      order: 1;
+
+    #nav-buttons-categories {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      user-select: none;
+      flex-wrap: wrap;
+    }
+    #nav-buttons-categories button {
       padding: 8px 18px;
       border-radius: 18px;
       display: flex;
@@ -97,15 +103,17 @@
       box-shadow: 0 3px 8px rgba(79,70,229,0.4);
       cursor: pointer;
       transition: background 0.3s, color 0.3s;
+      border: none;
+      font-size: 1em;
     }
-    .nav-btn.category.selected {
+    #nav-buttons-categories button.selected {
       background: var(--accent);
       color: var(--text);
       box-shadow: 0 5px 16px rgba(251,191,36,0.7);
       font-weight: 700;
       transform: scale(1.05);
     }
-    .nav-btn.category img {
+    #nav-buttons-categories button img {
       width: 32px;
       height: 32px;
       border-radius: 8px;
@@ -113,19 +121,20 @@
     }
 
     /* Category tree styles */
-    .category-tree {
+    #category-tree {
       max-width: 960px;
       margin: 0 auto 30px auto;
       padding: 12px 20px;
       border-radius: 12px;
       box-shadow: 0 1px 12px rgba(0,0,0,0.04);
       background: var(--card);
+      user-select: none;
     }
-    .category-tree ul {
+    #category-tree ul {
       list-style: none;
       padding-left: 0;
     }
-    .category-tree li {
+    #category-tree li {
       margin-bottom: 12px;
       padding-left: 28px;
       position: relative;
@@ -134,7 +143,7 @@
       color: var(--primary);
       border-left: 2px solid var(--primary);
     }
-    .category-tree li::before {
+    #category-tree li::before {
       content: '';
       position: absolute;
       left: 12px;
@@ -144,19 +153,18 @@
       border-radius: 50%;
       background: var(--primary);
     }
-    .category-tree li.selected {
+    #category-tree li.selected {
       color: var(--accent);
       font-weight: 700;
       border-left-color: var(--accent);
     }
-    .category-tree li.selected::before {
+    #category-tree li.selected::before {
       background: var(--accent);
     }
-    .category-tree ul ul {
+    #category-tree ul ul {
       margin-left: 20px;
       border-left: 2px solid var(--secondary);
     }
-
   </style>
 </head>
 <body>
@@ -176,7 +184,7 @@
     </nav>
   </header>
   <main class="main-content">
-    <!-- Offers marquee section -->
+    <!-- Scrolling Offers Marquee -->
     <section class="offers-marquee-section" aria-label="Scrolling offers">
       <span class="offers-marquee-label">Offers-@Hemaavathi_fashions:</span>
       <div class="offers-marquee">
@@ -195,31 +203,30 @@
       </div>
     </section>
 
-    <!-- Navigation bar -->
-    <nav class="nav-bar" aria-label="Main navigation">
-      <button class="nav-btn up" onclick="navigateUp()">⬆ Up</button>
-      <button class="nav-btn home" onclick="navigateHome()">🏠 Home</button>
-      <button class="nav-btn category" data-cat="Men" onclick="selectCategory('Men')">
+    <!-- Top row: Up and Home buttons -->
+    <div id="nav-buttons-top" aria-label="Navigation controls">
+      <button class="up" onclick="navigateUp()">⬆ Up</button>
+      <button class="home" onclick="navigateHome()">🏠 Home</button>
+    </div>
+
+    <!-- Second row: Category buttons -->
+    <div id="nav-buttons-categories" aria-label="Category selection">
+      <button data-cat="Men" onclick="selectCategory('Men')">
         <img src="https://i.postimg.cc/vmv674xt/mensweartdhirt.jpg" alt="Men" /> Men
       </button>
-      <button class="nav-btn category" data-cat="Women" onclick="selectCategory('Women')">
+      <button data-cat="Women" onclick="selectCategory('Women')">
         <img src="https://i.postimg.cc/tJncVQvW/pinksareewomen.jpg" alt="Women" /> Women
       </button>
-      <button class="nav-btn category" data-cat="Kids" onclick="selectCategory('Kids')">
+      <button data-cat="Kids" onclick="selectCategory('Kids')">
         <img src="assets/kids.png" alt="Kids" /> Kids
       </button>
-      <button class="nav-btn category" data-cat="Handlooms" onclick="selectCategory('Handlooms')">
+      <button data-cat="Handlooms" onclick="selectCategory('Handlooms')">
         <img src="https://i.postimg.cc/T11m3Twq/handloomsbeddingset.jpg" alt="Handlooms" /> Handlooms
       </button>
-    </nav>
+    </div>
 
-    <!-- Subcategory navigation tree -->
-    <nav
-      class="category-tree"
-      aria-label="Category navigation tree"
-      id="category-tree"
-      hidden
-    ></nav>
+    <!-- Category tree nav -->
+    <nav id="category-tree" aria-label="Category navigation tree" hidden></nav>
 
     <section class="category-header" aria-label="Category introduction">
       <h1>Explore Category Collections</h1>
@@ -275,7 +282,7 @@
   </footer>
 
   <script>
-    // Category Data structure - three levels of categories
+    // Category data tree for 3-level categories
     const categoryData = {
       Men: {
         Shirts: {
@@ -319,61 +326,60 @@
       },
     };
 
-    const categoryTree = document.getElementById("category-tree");
-    const navButtons = document.querySelectorAll(".nav-btn.category");
+    const navButtonsCategories = document.querySelectorAll('#nav-buttons-categories button');
+    const categoryTree = document.getElementById('category-tree');
 
-    function clearSelected() {
-      navButtons.forEach((btn) => btn.classList.remove("selected"));
-      categoryTree.hidden = true;
+    function clearSelection() {
+      navButtonsCategories.forEach(btn => btn.classList.remove('selected'));
       categoryTree.innerHTML = "";
+      categoryTree.hidden = true;
     }
 
     function createTree(ul, node) {
       for (const key in node) {
-        const li = document.createElement("li");
+        const li = document.createElement('li');
         li.textContent = key;
         li.tabIndex = 0;
         li.onclick = () => {
-          if (li.classList.contains("selected")) {
-            li.classList.remove("selected");
+          if (li.classList.contains('selected')) {
+            li.classList.remove('selected');
           } else {
-            li.classList.add("selected");
+            li.classList.add('selected');
             if (node[key]) {
-              let childUl = li.querySelector("ul");
+              let childUl = li.querySelector('ul');
               if (!childUl) {
-                childUl = document.createElement("ul");
+                childUl = document.createElement('ul');
                 li.appendChild(childUl);
               }
               createTree(childUl, node[key]);
             }
           }
         };
-        li.onkeypress = (e) => {
-          if (e.key === "Enter") li.onclick();
+        li.onkeypress = e => {
+          if (e.key === 'Enter') li.onclick();
         };
         ul.appendChild(li);
       }
     }
 
     function selectCategory(cat) {
-      clearSelected();
+      clearSelection();
       categoryTree.hidden = false;
-      navButtons.forEach((btn) => {
-        btn.classList.toggle("selected", btn.dataset.cat === cat);
+      navButtonsCategories.forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.cat === cat);
       });
-      categoryTree.innerHTML = "";
-      const ul = document.createElement("ul");
+      const ul = document.createElement('ul');
       categoryTree.appendChild(ul);
       createTree(ul, categoryData[cat]);
     }
 
     function navigateUp() {
-      clearSelected();
+      clearSelection();
     }
 
     function navigateHome() {
-      clearSelected();
-      window.scrollTo(0, 0);
+      clearSelection();
+      window.scrollTo(0,0);
     }
   </script>
 </body>
