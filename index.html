@@ -5,79 +5,159 @@
   <title>Hemaavathi Fashions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
   <style>
-    .main-categories-bar {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 28px;
-      margin: 22px auto 16px auto;
-      flex-wrap: wrap;
-      max-width: 950px;
+    /* Marquee offers section */
+    .offers-marquee-section {
+      background: var(--background);
+      border-radius: 12px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+      margin-bottom: 30px;
+      overflow: hidden;
+      padding: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+      position: relative;
     }
-    .cat-select-btn {
-      background: var(--card);
-      border: 2px solid var(--primary);
-      border-radius: 16px;
-      cursor: pointer;
-      width: 122px;
-      text-align: center;
-      text-decoration: none;
-      padding: 16px 10px 16px 10px;
-      transition: box-shadow 0.2s, border 0.2s, background 0.2s;
-      color: var(--text);
-      font-weight: 500;
-      box-shadow: 0 1px 9px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .cat-select-btn.active,
-    .cat-select-btn:hover {
-      border: 2px solid var(--accent);
-      background: var(--accent);
-      color: var(--primary);
+    .offers-marquee-label {
       font-weight: 700;
-      box-shadow: 0 5px 18px rgba(251,191,36,0.17);
-      text-decoration: none;
+      color: var(--primary);
+      display: inline-block;
+      margin-right: 16px;
+      font-size: 1.1em;
+      vertical-align: middle;
     }
-    .cat-select-img {
-      display: block;
-      border-radius: 8px;
-      width: 54px;
-      height: 54px;
+    .offers-marquee-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 40px;
+      white-space: nowrap;
+      animation: marqueeScroll 25s linear infinite;
+      will-change: transform;
+      vertical-align: middle;
+    }
+    .offers-marquee-content img {
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
       object-fit: cover;
-      margin: 0 auto 8px auto;
       background: #eee;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      margin-right: 8px;
     }
-    .up-home-bar {
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Navigation buttons area */
+    .nav-bar {
       display: flex;
       gap: 12px;
       justify-content: center;
-      margin: 12px auto 8px auto;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      user-select: none;
     }
-    .nav-btn-up, .nav-btn-home {
+    .nav-btn {
       padding: 8px 22px;
       border-radius: 20px;
-      color: #fff;
       border: none;
-      font-weight: 700;
-      cursor: pointer;
       font-size: 1em;
-      transition: background 0.2s;
-      box-shadow: 0 3px 8px rgba(79,70,229,0.16);
+      cursor: pointer;
+      font-weight: 700;
+      color: white;
+      box-shadow: 0 3px 8px rgba(79,70,229,0.3);
+      transition: background 0.3s;
     }
-    .nav-btn-up { background: #ef4444; }
-    .nav-btn-up:hover { background: #b91c1c; }
-    .nav-btn-home { background: #2563eb; }
-    .nav-btn-home:hover { background: #194185; }
-    @media (max-width: 700px) {
-      .main-categories-bar { flex-direction: column; gap: 18px; }
-      .cat-select-btn { width: 92vw; }
+    .nav-btn.up {
+      background: #ef4444;
+    }
+    .nav-btn.up:hover {
+      background: #b91c1c;
+    }
+    .nav-btn.home {
+      background: #2563eb;
+    }
+    .nav-btn.home:hover {
+      background: #1e40af;
+    }
+    .nav-btn.category {
+      background: var(--primary);
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: white;
+      box-shadow: 0 3px 8px rgba(79,70,229,0.4);
+      transition: background 0.3s, color 0.3s;
+    }
+    .nav-btn.category.selected {
+      background: var(--accent);
+      color: var(--text);
+      box-shadow: 0 5px 16px rgba(251,191,36,0.7);
+      font-weight: 700;
+      transform: scale(1.05);
+    }
+    .nav-btn.category img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    /* Category tree nav below main nav */
+    .category-tree {
+      max-width: 960px;
+      margin: 0 auto 30px auto;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 1px 12px rgba(0,0,0,0.04);
+      background: var(--card);
+    }
+    .category-tree ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    .category-tree li {
+      margin-bottom: 12px;
+      padding-left: 28px;
+      position: relative;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--primary);
+      border-left: 2px solid var(--primary);
+    }
+    .category-tree li::before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .category-tree li.selected {
+      color: var(--accent);
+      font-weight: 700;
+      border-left-color: var(--accent);
+    }
+    .category-tree li.selected::before {
+      background: var(--accent);
+    }
+    .category-tree ul ul {
+      margin-left: 20px;
+      border-left: 2px solid var(--secondary);
     }
   </style>
 </head>
@@ -100,49 +180,46 @@
 
   <main class="main-content">
 
-    <!-- Offers Marquee and Navigation Section -->
-    <div class="offers-marquee-section" aria-label="Scrolling offers">
-      <span class="offers-marquee-label">
-        Offers-@Hemaavathi_fashions:
-      </span>
+    <!-- Scrolling offers marquee -->
+    <section class="offers-marquee-section" aria-label="Scrolling offers">
+      <span class="offers-marquee-label">Offers-@Hemaavathi_fashions:</span>
       <div class="offers-marquee">
-        <div class="offers-marquee-content">
-          <img src="https://source.unsplash.com/58x58/?fashion,offer" alt="Offer 1" loading="lazy" />
+        <div class="offers-marquee-content" aria-live="polite" aria-atomic="true">
+          <img src="https://source.unsplash.com/58x58/?fashion,offer" alt="Offer 1" />
           <span>Grab 4 high quality cotton-dress materials for just ₹1,000</span>
-          <img src="https://source.unsplash.com/58x58/?saree,discount" alt="Offer 2" loading="lazy" />
+          <img src="https://source.unsplash.com/58x58/?saree,discount" alt="Offer 2" />
           <span>Flat 40% discount on all sarees</span>
-          <img src="https://source.unsplash.com/58x58/?handloom,textiles" alt="Offer 3" loading="lazy" />
+          <img src="https://source.unsplash.com/58x58/?handloom,textiles" alt="Offer 3" />
           <span>Special deals on all handlooms</span>
-          <img src="https://source.unsplash.com/58x58/?fashion,offer" alt="Offer 1" loading="lazy" />
+          <img src="https://source.unsplash.com/58x58/?fashion,offer" alt="Offer 1" />
           <span>Grab 4 high quality cotton-dress materials for just ₹1,000</span>
-          <img src="https://source.unsplash.com/58x58/?saree,discount" alt="Offer 2" loading="lazy" />
+          <img src="https://source.unsplash.com/58x58/?saree,discount" alt="Offer 2" />
           <span>Flat 40% discount on all sarees</span>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Up/Home Bar + Main Categories (static) -->
-    <div class="up-home-bar">
-      <a class="nav-btn-up" href="index.html">⬆ Up</a>
-      <a class="nav-btn-home" href="index.html">🏠 Home</a>
-    </div>
-    <nav class="main-categories-bar" aria-label="Top categories">
-      <a href="category.html?category=Men" class="cat-select-btn">
-        <img src="https://i.postimg.cc/vmv674xt/mensweartdhirt.jpg" class="cat-select-img" alt="Men"/>
-        Men
-      </a>
-      <a href="category.html?category=Women" class="cat-select-btn">
-        <img src="https://i.postimg.cc/tJncVQvW/pinksareewomen.jpg" class="cat-select-img" alt="Women"/>
-        Women
-      </a>
-      <a href="category.html?category=Kids" class="cat-select-btn">
-        <img src="assets/kids.png" class="cat-select-img" alt="Kids"/>
-        Kids
-      </a>
-      <a href="category.html?category=Handlooms" class="cat-select-btn">
-        <img src="https://i.postimg.cc/T11m3Twq/handloomsbeddingset.jpg" class="cat-select-img" alt="Handlooms"/>
-        Handlooms
-      </a>
+    <!-- Top-level nav buttons -->
+    <nav class="nav-bar" aria-label="Main navigation">
+      <button class="nav-btn up" onclick="navigateUp()">⬆ Up</button>
+      <button class="nav-btn home" onclick="navigateHome()">🏠 Home</button>
+      <button class="nav-btn category" data-cat="Men" onclick="selectCategory('Men')">
+        <img src="https://i.postimg.cc/vmv674xt/mensweartdhirt.jpg" alt="Men" /> Men
+      </button>
+      <button class="nav-btn category" data-cat="Women" onclick="selectCategory('Women')">
+        <img src="https://i.postimg.cc/tJncVQvW/pinksareewomen.jpg" alt="Women" /> Women
+      </button>
+      <button class="nav-btn category" data-cat="Kids" onclick="selectCategory('Kids')">
+        <img src="assets/kids.png" alt="Kids" /> Kids
+      </button>
+      <button class="nav-btn category" data-cat="Handlooms" onclick="selectCategory('Handlooms')">
+        <img src="https://i.postimg.cc/T11m3Twq/handloomsbeddingset.jpg" alt="Handlooms" /> Handlooms
+      </button>
+    </nav>
+
+    <!-- Category tree navigation -->
+    <nav class="category-tree" aria-label="Category navigation tree" id="category-tree" hidden>
+      <!-- Tree will populate dynamically -->
     </nav>
 
     <section class="category-header" aria-label="Introduction">
@@ -155,6 +232,7 @@
         <span style="color: var(--primary)">Handlooms</span>—at great prices.
       </p>
     </section>
+
     <section aria-label="Current offers" style="margin: 40px 0; max-width: 600px; margin-left: auto; margin-right: auto;">
       <h2 style="text-align: center; color: var(--secondary)">Current Offers</h2>
       <ul>
@@ -163,56 +241,6 @@
       </ul>
     </section>
 
-    <section
-      class="categories"
-      role="list"
-      aria-label="Product categories"
-    >
-      <article
-        class="category-card"
-        role="listitem"
-        tabindex="0"
-        onclick="window.location='category.html?category=Men'"
-        onkeypress="if(event.key==='Enter'){window.location='category.html?category=Men';}"
-      >
-        <img src="https://i.postimg.cc/vmv674xt/mensweartdhirt.jpg" alt="Men fashion" />
-        <h2>Men</h2>
-        <p>Casual &amp; classic styles for modern men.</p>
-      </article>
-      <article
-        class="category-card"
-        role="listitem"
-        tabindex="0"
-        onclick="window.location='category.html?category=Women'"
-        onkeypress="if(event.key==='Enter'){window.location='category.html?category=Women';}"
-      >
-        <img src="https://i.postimg.cc/tJncVQvW/pinksareewomen.jpg" alt="Women fashion" />
-        <h2>Women</h2>
-        <p>Trendy sarees, dress materials, and more.</p>
-      </article>
-      <article
-        class="category-card"
-        role="listitem"
-        tabindex="0"
-        onclick="window.location='category.html?category=Kids'"
-        onkeypress="if(event.key==='Enter'){window.location='category.html?category=Kids';}"
-      >
-        <img src="assets/kids.png" alt="Kids fashion" />
-        <h2>Kids</h2>
-        <p>Comfortable and fun kidswear.</p>
-      </article>
-      <article
-        class="category-card"
-        role="listitem"
-        tabindex="0"
-        onclick="window.location='category.html?category=Handlooms'"
-        onkeypress="if(event.key==='Enter'){window.location='category.html?category=Handlooms';}"
-      >
-        <img src="https://i.postimg.cc/T11m3Twq/handloomsbeddingset.jpg" alt="Handloom products" />
-        <h2>Handlooms</h2>
-        <p>Traditional quality towels and bedding.</p>
-      </article>
-    </section>
   </main>
 
   <footer>
@@ -223,17 +251,130 @@
       <a href="https://wa.me/919492324225" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     </nav>
     <nav class="footer-social" aria-label="Social media links">
-      <a href="https://instagram.com/hemaavathi__fashions" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="https://youtube.com/@Hemaavathifashions" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-        <i class="fab fa-youtube"></i>
-      </a>
+      <a href="https://instagram.com/hemaavathi__fashions" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://youtube.com/@Hemaavathifashions" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
     </nav>
     <div style="margin-top: 18px; font-size: 0.9em;">&copy; 2025 Hemaavathi Fashions</div>
   </footer>
+
+  <script>
+    // Category data tree - 3 level example structure
+    const categoryData = {
+      "Men": {
+        "Shirts": {
+          "Formal Shirts": null,
+          "Casual Shirts": null
+        },
+        "Pants": {
+          "Jeans": null,
+          "Chinos": null
+        }
+      },
+      "Women": {
+        "Sarees": {
+          "Silk": null,
+          "Cotton": null
+        },
+        "Dress Materials": {
+          "Cotton Dress": null,
+          "Silk Dress": null
+        }
+      },
+      "Kids": {
+        "Tops": {
+          "T-Shirts": null,
+          "Shirts": null
+        },
+        "Bottoms": {
+          "Shorts": null,
+          "Pants": null
+        }
+      },
+      "Handlooms": {
+        "Towels": {
+          "Cotton Towels": null,
+          "Silk Towels": null
+        },
+        "Bedding": {
+          "Quilt Covers": null,
+          "Bedsheets": null
+        }
+      }
+    };
+
+    const categoryTree = document.getElementById('category-tree');
+    const navButtons = document.querySelectorAll('.nav-btn.category');
+    let selectedCategory = null;
+
+    function clearSelected() {
+      navButtons.forEach(btn => btn.classList.remove('selected'));
+      categoryTree.hidden = true;
+      categoryTree.innerHTML = '';
+    }
+
+    function createTree(ul, node) {
+      for (const key in node) {
+        const li = document.createElement('li');
+        li.textContent = key;
+        li.tabIndex = 0;
+        li.onclick = () => {
+          // Toggle selection and show submenu if any
+          const currentlySelected = li.classList.contains('selected');
+          clearTreeSelection(ul);
+          if (!currentlySelected) {
+            li.classList.add('selected');
+            if (node[key]) {
+              // Show sub-sub-category tree below this li
+              let childUl = li.querySelector('ul');
+              if (!childUl) {
+                childUl = document.createElement('ul');
+                li.appendChild(childUl);
+              }
+              childUl.innerHTML = '';
+              createTree(childUl, node[key]);
+            }
+          }
+        };
+        li.onkeypress = e => {
+          if (e.key === 'Enter') {
+            li.onclick();
+          }
+        };
+        ul.appendChild(li);
+      }
+    }
+    function clearTreeSelection(ul) {
+      ul.querySelectorAll('li.selected').forEach(li => li.classList.remove('selected'));
+      ul.querySelectorAll('ul').forEach(childUl => childUl.remove());
+    }
+
+    function selectCategory(cat) {
+      clearSelected();
+      selectedCategory = cat;
+      navButtons.forEach(btn => {
+        if (btn.dataset.cat === cat) btn.classList.add('selected');
+      });
+      categoryTree.hidden = false;
+      categoryTree.innerHTML = '';
+      const ul = document.createElement('ul');
+      categoryTree.appendChild(ul);
+      createTree(ul, categoryData[cat]);
+    }
+
+    function navigateUp() {
+      clearSelected();
+      selectedCategory = null;
+      navButtons.forEach(btn => btn.classList.remove('selected'));
+      categoryTree.hidden = true;
+      categoryTree.innerHTML = '';
+    }
+
+    function navigateHome() {
+      // For simplicity same as navigate up
+      navigateUp();
+      window.scrollTo(0,0);
+    }
+  </script>
 </body>
 </html>
