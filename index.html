@@ -14,7 +14,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
   <style>
-    /* Marquee offers section */
+    /* Scrolling offers marquee styles */
     .offers-marquee-section {
       background: var(--background);
       border-radius: 12px;
@@ -57,16 +57,17 @@
       100% { transform: translateX(-50%); }
     }
 
-    /* Navigation buttons area */
+    /* Navigation bar with top Up/Home buttons and category buttons row below */
     .nav-bar {
       display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-bottom: 22px;
       flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 22px;
       user-select: none;
     }
-    .nav-btn {
+    .nav-btn.up, .nav-btn.home {
+      order: 0;
       padding: 8px 22px;
       border-radius: 20px;
       border: none;
@@ -90,15 +91,17 @@
       background: #1e40af;
     }
     .nav-btn.category {
-      background: var(--primary);
-      font-weight: 600;
+      order: 1;
       padding: 8px 18px;
       border-radius: 18px;
       display: flex;
       align-items: center;
       gap: 8px;
+      font-weight: 600;
       color: white;
+      background-color: var(--primary);
       box-shadow: 0 3px 8px rgba(79,70,229,0.4);
+      cursor: pointer;
       transition: background 0.3s, color 0.3s;
     }
     .nav-btn.category.selected {
@@ -115,7 +118,7 @@
       object-fit: cover;
     }
 
-    /* Category tree nav below main nav */
+    /* Category tree */
     .category-tree {
       max-width: 960px;
       margin: 0 auto 30px auto;
@@ -180,7 +183,7 @@
 
   <main class="main-content">
 
-    <!-- Scrolling offers marquee -->
+    <!-- Offers Marquee -->
     <section class="offers-marquee-section" aria-label="Scrolling offers">
       <span class="offers-marquee-label">Offers-@Hemaavathi_fashions:</span>
       <div class="offers-marquee">
@@ -199,7 +202,7 @@
       </div>
     </section>
 
-    <!-- Top-level nav buttons -->
+    <!-- Navigation bar with Up/Home and category buttons -->
     <nav class="nav-bar" aria-label="Main navigation">
       <button class="nav-btn up" onclick="navigateUp()">⬆ Up</button>
       <button class="nav-btn home" onclick="navigateHome()">🏠 Home</button>
@@ -217,10 +220,8 @@
       </button>
     </nav>
 
-    <!-- Category tree navigation -->
-    <nav class="category-tree" aria-label="Category navigation tree" id="category-tree" hidden>
-      <!-- Tree will populate dynamically -->
-    </nav>
+    <!-- Category tree navigation (hidden until category selected) -->
+    <nav class="category-tree" aria-label="Category navigation tree" id="category-tree" hidden></nav>
 
     <section class="category-header" aria-label="Introduction">
       <h1>Welcome to Hemaavathi Fashions</h1>
@@ -251,15 +252,21 @@
       <a href="https://wa.me/919492324225" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     </nav>
     <nav class="footer-social" aria-label="Social media links">
-      <a href="https://instagram.com/hemaavathi__fashions" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://youtube.com/@Hemaavathifashions" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="https://instagram.com/hemaavathi__fashions" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://youtube.com/@Hemaavathifashions" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
     </nav>
     <div style="margin-top: 18px; font-size: 0.9em;">&copy; 2025 Hemaavathi Fashions</div>
   </footer>
 
   <script>
-    // Category data tree - 3 level example structure
+    // Category Data Tree for tree navigation
     const categoryData = {
       "Men": {
         "Shirts": {
@@ -305,7 +312,6 @@
 
     const categoryTree = document.getElementById('category-tree');
     const navButtons = document.querySelectorAll('.nav-btn.category');
-    let selectedCategory = null;
 
     function clearSelected() {
       navButtons.forEach(btn => btn.classList.remove('selected'));
@@ -313,49 +319,41 @@
       categoryTree.innerHTML = '';
     }
 
+    // Expanding subcategory lists persist, no disapperaring subtrees on new selection
     function createTree(ul, node) {
       for (const key in node) {
         const li = document.createElement('li');
         li.textContent = key;
         li.tabIndex = 0;
         li.onclick = () => {
-          // Toggle selection and show submenu if any
-          const currentlySelected = li.classList.contains('selected');
-          clearTreeSelection(ul);
-          if (!currentlySelected) {
+          if (li.classList.contains('selected')) {
+            // deselect only, keep subtree visible
+            li.classList.remove('selected');
+          } else {
             li.classList.add('selected');
             if (node[key]) {
-              // Show sub-sub-category tree below this li
               let childUl = li.querySelector('ul');
               if (!childUl) {
                 childUl = document.createElement('ul');
                 li.appendChild(childUl);
               }
-              childUl.innerHTML = '';
               createTree(childUl, node[key]);
             }
           }
         };
         li.onkeypress = e => {
-          if (e.key === 'Enter') {
-            li.onclick();
-          }
+          if (e.key === 'Enter') li.onclick();
         };
         ul.appendChild(li);
       }
     }
-    function clearTreeSelection(ul) {
-      ul.querySelectorAll('li.selected').forEach(li => li.classList.remove('selected'));
-      ul.querySelectorAll('ul').forEach(childUl => childUl.remove());
-    }
 
     function selectCategory(cat) {
       clearSelected();
-      selectedCategory = cat;
-      navButtons.forEach(btn => {
-        if (btn.dataset.cat === cat) btn.classList.add('selected');
-      });
       categoryTree.hidden = false;
+      navButtons.forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.cat === cat);
+      });
       categoryTree.innerHTML = '';
       const ul = document.createElement('ul');
       categoryTree.appendChild(ul);
@@ -364,15 +362,10 @@
 
     function navigateUp() {
       clearSelected();
-      selectedCategory = null;
-      navButtons.forEach(btn => btn.classList.remove('selected'));
-      categoryTree.hidden = true;
-      categoryTree.innerHTML = '';
     }
 
     function navigateHome() {
-      // For simplicity same as navigate up
-      navigateUp();
+      clearSelected();
       window.scrollTo(0,0);
     }
   </script>
