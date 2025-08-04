@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <title>Category - Hemaavathi Fashions</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
+    /* Scrolling offers marquee styles */
     .offers-marquee-section {
       background: var(--background);
       border-radius: 12px;
@@ -50,15 +51,17 @@
       100% { transform: translateX(-50%); }
     }
 
+    /* Navigation bar styles */
     .nav-bar {
       display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-bottom: 22px;
       flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 22px;
       user-select: none;
     }
-    .nav-btn {
+    .nav-btn.up, .nav-btn.home {
+      order: 0;
       padding: 8px 22px;
       border-radius: 20px;
       border: none;
@@ -82,15 +85,17 @@
       background: #1e40af;
     }
     .nav-btn.category {
-      background: var(--primary);
-      font-weight: 600;
+      order: 1;
       padding: 8px 18px;
       border-radius: 18px;
       display: flex;
       align-items: center;
       gap: 8px;
+      font-weight: 600;
       color: white;
+      background-color: var(--primary);
       box-shadow: 0 3px 8px rgba(79,70,229,0.4);
+      cursor: pointer;
       transition: background 0.3s, color 0.3s;
     }
     .nav-btn.category.selected {
@@ -107,6 +112,7 @@
       object-fit: cover;
     }
 
+    /* Category tree styles */
     .category-tree {
       max-width: 960px;
       margin: 0 auto 30px auto;
@@ -150,11 +156,18 @@
       margin-left: 20px;
       border-left: 2px solid var(--secondary);
     }
+
   </style>
 </head>
 <body>
   <header>
-    <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo" width="160" height="85" />
+    <img
+      src="assets/logo.png"
+      alt="Hemaavathi Fashions Logo"
+      class="logo"
+      width="160"
+      height="85"
+    />
     <nav class="navbar" aria-label="Primary navigation">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -163,6 +176,7 @@
     </nav>
   </header>
   <main class="main-content">
+    <!-- Offers marquee section -->
     <section class="offers-marquee-section" aria-label="Scrolling offers">
       <span class="offers-marquee-label">Offers-@Hemaavathi_fashions:</span>
       <div class="offers-marquee">
@@ -181,6 +195,7 @@
       </div>
     </section>
 
+    <!-- Navigation bar -->
     <nav class="nav-bar" aria-label="Main navigation">
       <button class="nav-btn up" onclick="navigateUp()">⬆ Up</button>
       <button class="nav-btn home" onclick="navigateHome()">🏠 Home</button>
@@ -198,19 +213,26 @@
       </button>
     </nav>
 
-    <nav class="category-tree" aria-label="Category navigation tree" id="category-tree" hidden></nav>
+    <!-- Subcategory navigation tree -->
+    <nav
+      class="category-tree"
+      aria-label="Category navigation tree"
+      id="category-tree"
+      hidden
+    ></nav>
 
-    <section class="category-header" aria-label="Introduction">
-      <h1>Choose what you like</h1>
+    <section class="category-header" aria-label="Category introduction">
+      <h1>Explore Category Collections</h1>
       <p>
-        Explore fashionable collections—<span style="color: var(--primary)">Women</span>,
-        <span style="color: var(--primary)">Men</span>,
-        <span style="color: var(--primary)">Kids</span>, and
-        <span style="color: var(--primary)">Handlooms</span>.
+        Browse subcategories and curated collections for
+        <span style="color: var(--primary)">Women</span>, 
+        <span style="color: var(--primary)">Men</span>, 
+        <span style="color: var(--primary)">Kids</span>, 
+        and <span style="color: var(--primary)">Handlooms</span>.
       </p>
     </section>
 
-    <section aria-label="Current offers" style="margin: 40px 0; max-width: 600px; margin-left: auto; margin-right: auto;">
+    <section aria-label="Current offers" style="margin: 40px auto; max-width: 600px;">
       <h2 style="text-align: center; color: var(--secondary)">Current Offers</h2>
       <ul>
         <li>Grab 4 high quality cotton-dress materials for just ₹1,000</li>
@@ -218,6 +240,7 @@
       </ul>
     </section>
   </main>
+
   <footer>
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="about.html">About</a>
@@ -226,125 +249,131 @@
       <a href="https://wa.me/919492324225" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     </nav>
     <nav class="footer-social" aria-label="Social media links">
-      <a href="https://instagram.com/hemaavathi__fashions" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://youtube.com/@Hemaavathifashions" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a
+        href="https://instagram.com/hemaavathi__fashions"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram"
+        ><i class="fab fa-instagram"></i
+      ></a>
+      <a
+        href="https://facebook.com/profile.php?id=61574970737394"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Facebook"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
+      <a
+        href="https://youtube.com/@Hemaavathifashions"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="YouTube"
+        ><i class="fab fa-youtube"></i
+      ></a>
     </nav>
     <div style="margin-top: 18px; font-size: 0.9em;">&copy; 2025 Hemaavathi Fashions</div>
   </footer>
+
   <script>
-    // Category Data Example (3 level)
+    // Category Data structure - three levels of categories
     const categoryData = {
-      "Men": {
-        "Shirts": {
+      Men: {
+        Shirts: {
           "Formal Shirts": null,
-          "Casual Shirts": null
+          "Casual Shirts": null,
         },
-        "Pants": {
-          "Jeans": null,
-          "Chinos": null
-        }
+        Pants: {
+          Jeans: null,
+          Chinos: null,
+        },
       },
-      "Women": {
-        "Sarees": {
-          "Silk": null,
-          "Cotton": null
+      Women: {
+        Sarees: {
+          Silk: null,
+          Cotton: null,
         },
         "Dress Materials": {
           "Cotton Dress": null,
-          "Silk Dress": null
-        }
+          "Silk Dress": null,
+        },
       },
-      "Kids": {
-        "Tops": {
+      Kids: {
+        Tops: {
           "T-Shirts": null,
-          "Shirts": null
+          Shirts: null,
         },
-        "Bottoms": {
-          "Shorts": null,
-          "Pants": null
-        }
+        Bottoms: {
+          Shorts: null,
+          Pants: null,
+        },
       },
-      "Handlooms": {
-        "Towels": {
+      Handlooms: {
+        Towels: {
           "Cotton Towels": null,
-          "Silk Towels": null
+          "Silk Towels": null,
         },
-        "Bedding": {
+        Bedding: {
           "Quilt Covers": null,
-          "Bedsheets": null
-        }
-      }
+          Bedsheets: null,
+        },
+      },
     };
 
-    const categoryTree = document.getElementById('category-tree');
-    const navButtons = document.querySelectorAll('.nav-btn.category');
-    let selectedCategory = null;
+    const categoryTree = document.getElementById("category-tree");
+    const navButtons = document.querySelectorAll(".nav-btn.category");
 
     function clearSelected() {
-      navButtons.forEach(btn => btn.classList.remove('selected'));
+      navButtons.forEach((btn) => btn.classList.remove("selected"));
       categoryTree.hidden = true;
-      categoryTree.innerHTML = '';
+      categoryTree.innerHTML = "";
     }
 
     function createTree(ul, node) {
       for (const key in node) {
-        const li = document.createElement('li');
+        const li = document.createElement("li");
         li.textContent = key;
         li.tabIndex = 0;
         li.onclick = () => {
-          const currentlySelected = li.classList.contains('selected');
-          clearTreeSelection(ul);
-          if (!currentlySelected) {
-            li.classList.add('selected');
+          if (li.classList.contains("selected")) {
+            li.classList.remove("selected");
+          } else {
+            li.classList.add("selected");
             if (node[key]) {
-              let childUl = li.querySelector('ul');
+              let childUl = li.querySelector("ul");
               if (!childUl) {
-                childUl = document.createElement('ul');
+                childUl = document.createElement("ul");
                 li.appendChild(childUl);
               }
-              childUl.innerHTML = '';
               createTree(childUl, node[key]);
             }
           }
         };
-        li.onkeypress = e => {
-          if (e.key === 'Enter') {
-            li.onclick();
-          }
+        li.onkeypress = (e) => {
+          if (e.key === "Enter") li.onclick();
         };
         ul.appendChild(li);
       }
     }
-    function clearTreeSelection(ul) {
-      ul.querySelectorAll('li.selected').forEach(li => li.classList.remove('selected'));
-      ul.querySelectorAll('ul').forEach(childUl => childUl.remove());
-    }
 
     function selectCategory(cat) {
       clearSelected();
-      selectedCategory = cat;
-      navButtons.forEach(btn => {
-        if (btn.dataset.cat === cat) btn.classList.add('selected');
-      });
       categoryTree.hidden = false;
-      categoryTree.innerHTML = '';
-      const ul = document.createElement('ul');
+      navButtons.forEach((btn) => {
+        btn.classList.toggle("selected", btn.dataset.cat === cat);
+      });
+      categoryTree.innerHTML = "";
+      const ul = document.createElement("ul");
       categoryTree.appendChild(ul);
       createTree(ul, categoryData[cat]);
     }
 
     function navigateUp() {
       clearSelected();
-      selectedCategory = null;
-      navButtons.forEach(btn => btn.classList.remove('selected'));
-      categoryTree.hidden = true;
-      categoryTree.innerHTML = '';
     }
 
     function navigateHome() {
-      navigateUp();
-      window.scrollTo(0,0);
+      clearSelected();
+      window.scrollTo(0, 0);
     }
   </script>
 </body>
