@@ -5,143 +5,110 @@
   <title>Category - Hemaavathi Fashions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    .subcategory-nav {
+    .main-categories-bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 28px;
+      margin: 22px auto 16px auto;
+      flex-wrap: wrap;
+      max-width: 950px;
+    }
+    .cat-select-btn {
+      background: var(--card);
+      border: 2px solid var(--primary);
+      border-radius: 16px;
+      cursor: pointer;
+      width: 122px;
+      text-align: center;
+      text-decoration: none;
+      padding: 16px 10px 16px 10px;
+      transition: box-shadow 0.2s, border 0.2s, background 0.2s;
+      color: var(--text);
+      font-weight: 500;
+      box-shadow: 0 1px 9px rgba(0,0,0,0.08);
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      margin: 16px 0;
+      align-items: center;
     }
-    .nav-top-buttons {
+    .cat-select-btn.active,
+    .cat-select-btn:hover {
+      border: 2px solid var(--accent);
+      background: var(--accent);
+      color: var(--primary);
+      font-weight: 700;
+      box-shadow: 0 5px 18px rgba(251,191,36,0.17);
+      text-decoration: none;
+    }
+    .cat-select-img {
+      display: block;
+      border-radius: 8px;
+      width: 54px;
+      height: 54px;
+      object-fit: cover;
+      margin: 0 auto 8px auto;
+      background: #eee;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .up-home-bar {
       display: flex;
       gap: 12px;
-      margin-bottom: 12px;
+      justify-content: center;
+      margin: 12px auto 8px auto;
     }
-    .subcategory-buttons {
+    .nav-btn-up, .nav-btn-home {
+      padding: 8px 22px;
+      border-radius: 20px;
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+      box-shadow: 0 3px 8px rgba(79,70,229,0.16);
+    }
+    .nav-btn-up { background: #ef4444; }
+    .nav-btn-up:hover { background: #b91c1c; }
+    .nav-btn-home { background: #2563eb; }
+    .nav-btn-home:hover { background: #194185; }
+    @media (max-width: 700px) {
+      .main-categories-bar { flex-direction: column; gap: 18px; }
+      .cat-select-btn { width: 92vw; }
+    }
+    /* Optional: style for subcategory area below, can be enhanced further */
+    .subcategory-section {
+      margin: 32px auto 0 auto;
+      max-width: 800px;
+    }
+    .subcategory-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 18px;
+      justify-content: center;
+      margin-top: 16px;
     }
-    .subcategory-btn {
-      padding: 8px 22px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 20px;
+    .subcategory-card {
+      background: var(--background);
+      border-radius: 10px;
+      box-shadow: 0 1px 7px rgba(0,0,0,0.07);
+      padding: 18px 26px;
       font-weight: 600;
+      color: var(--primary);
       cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 3px 8px rgba(79, 70, 229, 0.3);
     }
-    .subcategory-btn.selected {
+    .subcategory-card:hover {
       background: var(--accent);
       color: var(--text);
-      box-shadow: 0 5px 16px rgba(251, 191, 36, 0.5);
-      transform: scale(1.05);
-    }
-    .subcategory-btn:hover:not(.selected) {
-      background: #6366f1;
-    }
-    /* Red "Up" button */
-    .nav-up-btn {
-      padding: 8px 22px;
-      background: #ef4444;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(239, 68, 68, 0.6);
-      transition: background 0.3s;
-    }
-    .nav-up-btn:hover {
-      background: #b91c1c;
-      box-shadow: 0 5px 16px rgba(185, 28, 28, 0.7);
-    }
-    /* Blue "Home" button */
-    .nav-home-btn {
-      padding: 8px 22px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.6);
-      transition: background 0.3s;
-    }
-    .nav-home-btn:hover {
-      background: #1e40af;
-      box-shadow: 0 5px 16px rgba(30, 64, 175, 0.7);
-    }
-    .filter-sort-bar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 12px;
-      margin: 24px 0;
-      align-items: center;
-    }
-    .filter-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .filter-group label {
-      font-weight: 600;
-      margin-right: 8px;
-    }
-    select,
-    input[type='checkbox'] {
-      cursor: pointer;
-    }
-    .size-filters {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      max-width: 300px;
-    }
-    #breadcrumb-nav {
-      margin-bottom: 1rem;
-    }
-    #breadcrumb-nav button {
-      background: none;
-      border: none;
-      color: var(--primary);
-      font-weight: 600;
-      cursor: pointer;
-      margin-right: 8px;
-      padding: 0;
-      font-size: 1rem;
-    }
-    #breadcrumb-nav button:hover {
-      text-decoration: underline;
-    }
-    #breadcrumb-nav span.separator {
-      margin-right: 8px;
-      color: var(--accent);
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <header>
-    <img
-      src="assets/logo.png"
-      alt="Hemaavathi Fashions Logo"
-      class="logo"
-      width="160"
-      height="85"
-    />
+    <img src="assets/logo.png" alt="Hemaavathi Fashions Logo" class="logo" width="160" height="85" />
     <nav class="navbar" aria-label="Primary navigation">
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
@@ -149,46 +116,40 @@
       <a href="policy.html">Policies</a>
     </nav>
   </header>
-
   <main class="main-content">
-    <section id="breadcrumb-nav" aria-label="Breadcrumb navigation"></section>
+    <div class="up-home-bar">
+      <a class="nav-btn-up" href="index.html">⬆ Up</a>
+      <a class="nav-btn-home" href="index.html">🏠 Home</a>
+    </div>
 
-    <section class="category-header" aria-label="Category header">
-      <h1 id="category-title">Loading...</h1>
-      <p id="category-description"></p>
-    </section>
-
-    <nav class="subcategory-nav" id="subcategory-nav" aria-label="Subcategory navigation">
-      <!-- Subcategory buttons will be inserted here -->
+    <nav class="main-categories-bar" aria-label="Top categories">
+      <a href="category.html?category=Men" class="cat-select-btn">
+        <img src="https://i.postimg.cc/vmv674xt/mensweartdhirt.jpg" class="cat-select-img" alt="Men"/>
+        Men
+      </a>
+      <a href="category.html?category=Women" class="cat-select-btn">
+        <img src="https://i.postimg.cc/tJncVQvW/pinksareewomen.jpg" class="cat-select-img" alt="Women"/>
+        Women
+      </a>
+      <a href="category.html?category=Kids" class="cat-select-btn">
+        <img src="assets/kids.png" class="cat-select-img" alt="Kids"/>
+        Kids
+      </a>
+      <a href="category.html?category=Handlooms" class="cat-select-btn">
+        <img src="https://i.postimg.cc/T11m3Twq/handloomsbeddingset.jpg" class="cat-select-img" alt="Handlooms"/>
+        Handlooms
+      </a>
     </nav>
-
-    <section class="filter-sort-bar" aria-label="Sorting and filtering options">
-      <div class="filter-group" aria-label="Size filter">
-        <label>Filter by size:</label>
-        <div class="size-filters" id="size-filters">
-          <!-- Size checkbox filters inserted here -->
-        </div>
+    <!-- Optional: insert subcategories below if required, or prompt for selection -->
+    <section class="subcategory-section">
+      <h2 style="text-align:center; color:var(--secondary); margin-bottom:12px;">Choose a Subcategory</h2>
+      <div class="subcategory-list">
+        <!-- Example subcategories, adjust as needed. Replace with static HTML or with server-side data -->
+        <div class="subcategory-card">Shirts</div>
+        <div class="subcategory-card">Trousers</div>
+        <div class="subcategory-card">Innerwear</div>
+        <div class="subcategory-card">Accessories</div>
       </div>
-
-      <div class="filter-group" aria-label="Sort products">
-        <label for="sort-select">Sort by:</label>
-        <select id="sort-select">
-          <option value="default">-- Default --</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="name-asc">Name: A-Z</option>
-          <option value="name-desc">Name: Z-A</option>
-        </select>
-      </div>
-    </section>
-
-    <section
-      id="product-list"
-      class="product-grid"
-      aria-live="polite"
-      aria-label="Product list"
-    >
-      <!-- Products will be dynamically inserted here -->
     </section>
   </main>
 
@@ -197,349 +158,20 @@
       <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
       <a href="policy.html">Policies</a>
-      <a href="https://wa.me/919492324225" target="_blank" rel="noopener noreferrer"
-        >WhatsApp</a
-      >
+      <a href="https://wa.me/919492324225" target="_blank" rel="noopener noreferrer">WhatsApp</a>
     </nav>
-
     <nav class="footer-social" aria-label="Social media links">
-      <a
-        href="https://instagram.com/hemaavathi__fashions"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Instagram"
-        ><i class="fab fa-instagram"></i
-      ></a>
-      <a
-        href="https://facebook.com/profile.php?id=61574970737394"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Facebook"
-        ><i class="fab fa-facebook-f"></i
-      ></a>
-      <a
-        href="https://youtube.com/@Hemaavathifashions"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="YouTube"
-        ><i class="fab fa-youtube"></i
-      ></a>
+      <a href="https://instagram.com/hemaavathi__fashions" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://facebook.com/profile.php?id=61574970737394" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://youtube.com/@Hemaavathifashions" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+        <i class="fab fa-youtube"></i>
+      </a>
     </nav>
     <div style="margin-top: 18px; font-size: 0.9em;">&copy; 2025 Hemaavathi Fashions</div>
   </footer>
-
-  <script>
-    let currentPath = []; // current navigation path array
-
-    let allProducts = [];
-    let categoryHeaders = {};
-    let subCategories = {};
-    let selectedSizes = new Set();
-    let currentSort = "default";
-
-    function getCategoryFromUrl() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("category") || location.search.slice(1) || "";
-    }
-
-    function createProductCard(product) {
-      const card = document.createElement("div");
-      card.className = "product-card";
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" loading="lazy" />
-        <div class="prod-info">
-          <span class="prod-name">${product.name}</span><br />
-          <span class="prod-price">₹${product.price}</span>
-          ${
-            product.sizes
-              ? `<br/><small>Sizes: ${product.sizes.join(", ")}</small>`
-              : ""
-          }
-        </div>`;
-      return card;
-    }
-
-    function flattenSizes(products) {
-      const sizesSet = new Set();
-      products.forEach((p) => {
-        if (Array.isArray(p.sizes)) p.sizes.forEach((s) => sizesSet.add(s));
-      });
-      return Array.from(sizesSet).sort();
-    }
-
-    function renderBreadcrumbs() {
-      const container = document.getElementById("breadcrumb-nav");
-      container.innerHTML = "";
-
-      const homeLink = document.createElement("button");
-      homeLink.textContent = "Home";
-      homeLink.onclick = () => {
-        currentPath = [];
-        renderAll();
-      };
-      container.appendChild(homeLink);
-
-      if (currentPath.length === 0) return;
-
-      currentPath.forEach((segment, idx) => {
-        const sep = document.createElement("span");
-        sep.className = "separator";
-        sep.textContent = "/";
-        container.appendChild(sep);
-
-        const btn = document.createElement("button");
-        btn.textContent = segment;
-        btn.onclick = () => {
-          currentPath = currentPath.slice(0, idx + 1);
-          renderAll();
-        };
-        container.appendChild(btn);
-      });
-    }
-
-    function getNodeAtCurrentPath() {
-      let node = subCategories;
-      for (const segment of currentPath) {
-        if (node && typeof node === "object") node = node[segment];
-        else return null;
-      }
-      return node;
-    }
-
-    function renderNavigation() {
-      const container = document.getElementById("subcategory-nav");
-      container.innerHTML = '';
-
-      // Create container for top buttons (Up and Home)
-      const topButtons = document.createElement("div");
-      topButtons.className = "nav-top-buttons";
-      container.appendChild(topButtons);
-
-      // Create container for subcategory buttons
-      const subButtons = document.createElement("div");
-      subButtons.className = "subcategory-buttons";
-      container.appendChild(subButtons);
-
-      if (currentPath.length > 0) {
-        // Render Up button
-        const upBtn = document.createElement("button");
-        upBtn.textContent = "⬆ Up";
-        upBtn.className = "nav-up-btn";
-        upBtn.onclick = () => {
-          currentPath.pop();
-          selectedSizes.clear();
-          document.getElementById("sort-select").value = "default";
-          currentSort = "default";
-          renderAll();
-        };
-        topButtons.appendChild(upBtn);
-
-        // Render Home button
-        const homeBtn = document.createElement("button");
-        homeBtn.textContent = "🏠 Home";
-        homeBtn.className = "nav-home-btn";
-        homeBtn.onclick = () => {
-          currentPath = [];
-          selectedSizes.clear();
-          document.getElementById("sort-select").value = "default";
-          currentSort = "default";
-          renderAll();
-        };
-        topButtons.appendChild(homeBtn);
-      }
-
-      // Always show all navigation levels
-      let pathSoFar = [];
-      for (let i = 0; i <= currentPath.length; i++) {
-        let node = subCategories;
-        for (const segment of pathSoFar) {
-          if (node && typeof node === "object") node = node[segment];
-        }
-
-        if (!node || typeof node !== "object") continue;
-
-        Object.keys(node).forEach((key) => {
-          const btn = document.createElement("button");
-          btn.textContent = key;
-          btn.className = "subcategory-btn";
-          
-          // Mark as selected if this is the current level
-          if (i === currentPath.length && currentPath[i-1] === key) {
-            btn.classList.add("selected");
-          }
-          
-          btn.onclick = () => {
-            if (i < currentPath.length) {
-              // Navigating to a higher level
-              currentPath = pathSoFar.slice(0, i);
-            }
-            currentPath.push(key);
-            selectedSizes.clear();
-            document.getElementById("sort-select").value = "default";
-            currentSort = "default";
-            renderAll();
-          };
-          subButtons.appendChild(btn);
-        });
-
-        if (i < currentPath.length) {
-          pathSoFar.push(currentPath[i]);
-        }
-      }
-    }
-
-    function renderFilters() {
-      const container = document.getElementById("size-filters");
-      container.innerHTML = "";
-
-      // Filter products by current path but exclude size if last segment is size
-      let pathStr = currentPath.join("/");
-      let filterPath = pathStr;
-
-      const nodeAtPath = getNodeAtCurrentPath();
-      if (Array.isArray(nodeAtPath) || typeof nodeAtPath === "string") {
-        filterPath = currentPath.slice(0, -1).join("/");
-      }
-
-      const filtered = allProducts.filter((p) =>
-        p.category.startsWith(filterPath)
-      );
-
-      const sizes = flattenSizes(filtered);
-      if (sizes.length === 0) return;
-
-      sizes.forEach((size) => {
-        const id = `size-filter-${size.replace(/\s+/g, "-")}`;
-        const label = document.createElement("label");
-        label.htmlFor = id;
-        label.textContent = size;
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.id = id;
-        checkbox.value = size;
-        checkbox.checked = selectedSizes.has(size);
-
-        checkbox.onchange = (e) => {
-          if (e.target.checked) selectedSizes.add(size);
-          else selectedSizes.delete(size);
-          renderProducts();
-        };
-
-        label.prepend(checkbox);
-        container.appendChild(label);
-      });
-    }
-
-    function sortProducts(products) {
-      switch (currentSort) {
-        case "price-asc":
-          return products.sort((a, b) => a.price - b.price);
-        case "price-desc":
-          return products.sort((a, b) => b.price - a.price);
-        case "name-asc":
-          return products.sort((a, b) => a.name.localeCompare(b.name));
-        case "name-desc":
-          return products.sort((a, b) => b.name.localeCompare(a.name));
-        default:
-          return products;
-      }
-    }
-
-    function renderProducts() {
-      const container = document.getElementById("product-list");
-      container.innerHTML = "";
-
-      // Determine category filter string to match products
-      let filterPath = currentPath.join("/");
-
-      // If last segment is a size, strip it to parent path
-      const nodeAtPath = getNodeAtCurrentPath();
-      if (Array.isArray(nodeAtPath)) {
-        filterPath = currentPath.slice(0, -1).join("/");
-      }
-
-      let filtered = allProducts.filter((p) => p.category.startsWith(filterPath));
-
-      // Apply size filters (only if sizes selected)
-      if (selectedSizes.size > 0) {
-        filtered = filtered.filter(
-          (p) => p.sizes && p.sizes.some((sz) => selectedSizes.has(sz))
-        );
-      }
-
-      filtered = sortProducts(filtered);
-
-      if (filtered.length === 0) {
-        container.innerHTML = "<p>No products match the current filters.</p>";
-        return;
-      }
-
-      filtered.forEach((product) => {
-        container.appendChild(createProductCard(product));
-      });
-    }
-
-    function renderCategoryHeader() {
-      const titleEl = document.getElementById("category-title");
-      const descEl = document.getElementById("category-description");
-
-      const mainCategory = currentPath.length > 0 ? currentPath[0] : "";
-
-      if (categoryHeaders && mainCategory) {
-        titleEl.textContent =
-          categoryHeaders[mainCategory]?.title || mainCategory;
-        descEl.textContent = categoryHeaders[mainCategory]?.text || "";
-      } else {
-        titleEl.textContent = "Category";
-        descEl.textContent = "";
-      }
-    }
-
-    function renderAll() {
-      renderBreadcrumbs();
-      renderNavigation();
-      renderCategoryHeader();
-      renderFilters();
-      renderProducts();
-    }
-
-    async function loadDataAndStart() {
-      try {
-        const [headers, products, subs] = await Promise.all([
-          fetch("categoryHeaders.json").then((r) => r.json()),
-          fetch("products.json").then((r) => r.json()),
-          fetch("subCategories.json").then((r) => r.json()),
-        ]);
-        categoryHeaders = headers;
-        allProducts = products;
-        subCategories = subs;
-
-        const startCategory = getCategoryFromUrl();
-        if (startCategory && Object.keys(subCategories).includes(startCategory)) {
-          currentPath = [startCategory];
-        } else {
-          currentPath = [];
-        }
-
-        document.getElementById("sort-select").value = currentSort;
-
-        renderAll();
-      } catch (e) {
-        console.error("Failed to load data:", e);
-      }
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      loadDataAndStart();
-
-      document
-        .getElementById("sort-select")
-        .addEventListener("change", (e) => {
-          currentSort = e.target.value;
-          renderProducts();
-        });
-    });
-  </script>
 </body>
 </html>
