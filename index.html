@@ -5,97 +5,79 @@
   <title>Hemaavathi Fashions</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    /* Style for marquee section and images */
-    .offers-marquee-section {
-      position: relative;
-      background: var(--background);
-      border-radius: 12px;
-      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
-      margin-bottom: 30px;
-      padding: 10px 0 8px 0;
-      overflow: hidden;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .offers-marquee-label {
-      font-weight: 700;
-      color: var(--primary);
-      display: inline-block;
-      margin-right: 18px;
-      font-size: 1.08em;
-    }
-    .offers-marquee-content {
-      display: inline-flex;
-      align-items: center;
-      gap: 26px;
-      animation: offers-marquee-scroll 28s linear infinite;
-      will-change: transform;
-    }
-    .offers-marquee img {
-      height: 58px;
-      width: 58px;
-      border-radius: 12px;
-      object-fit: cover;
-      background: #eee;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-      margin-right: 9px;
-    }
-    @keyframes offers-marquee-scroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-60%); }
-    }
-    .offers-marquee {
-      width: 98%;
-      overflow: hidden;
-    }
-    /* Navigation bar buttons with up/home logic */
-    .custom-nav-bar {
+    .main-categories-bar {
       display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 28px;
+      margin: 22px auto 16px auto;
+      flex-wrap: wrap;
+      max-width: 950px;
+    }
+    .cat-select-btn {
+      background: var(--card);
+      border: 2px solid var(--primary);
+      border-radius: 16px;
+      cursor: pointer;
+      width: 122px;
+      text-align: center;
+      text-decoration: none;
+      padding: 16px 10px 16px 10px;
+      transition: box-shadow 0.2s, border 0.2s, background 0.2s;
+      color: var(--text);
+      font-weight: 500;
+      box-shadow: 0 1px 9px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
       align-items: center;
+    }
+    .cat-select-btn.active,
+    .cat-select-btn:hover {
+      border: 2px solid var(--accent);
+      background: var(--accent);
+      color: var(--primary);
+      font-weight: 700;
+      box-shadow: 0 5px 18px rgba(251,191,36,0.17);
+      text-decoration: none;
+    }
+    .cat-select-img {
+      display: block;
+      border-radius: 8px;
+      width: 54px;
+      height: 54px;
+      object-fit: cover;
+      margin: 0 auto 8px auto;
+      background: #eee;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .up-home-bar {
+      display: flex;
       gap: 12px;
       justify-content: center;
-      margin: 28px auto 18px auto;
-      flex-wrap: wrap;
+      margin: 12px auto 8px auto;
     }
-    .custom-nav-btn,
-    .custom-nav-btn.selected {
+    .nav-btn-up, .nav-btn-home {
       padding: 8px 22px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 22px;
-      background: var(--primary);
+      border-radius: 20px;
       color: #fff;
-      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
-    }
-    .custom-nav-btn.selected {
-      background: var(--accent);
-      color: var(--text);
-      box-shadow: 0 5px 16px rgba(251,191,36,0.5);
-      transform: scale(1.07);
-    }
-    .custom-nav-btn.up {
-      background: #ef4444;
+      border: none;
       font-weight: 700;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+      box-shadow: 0 3px 8px rgba(79,70,229,0.16);
     }
-    .custom-nav-btn.up:hover {
-      background: #b91c1c;
-    }
-    .custom-nav-btn.home {
-      background: #2563eb;
-      font-weight: 700;
-    }
-    .custom-nav-btn.home:hover {
-      background: #1e40af;
+    .nav-btn-up { background: #ef4444; }
+    .nav-btn-up:hover { background: #b91c1c; }
+    .nav-btn-home { background: #2563eb; }
+    .nav-btn-home:hover { background: #194185; }
+    @media (max-width: 700px) {
+      .main-categories-bar { flex-direction: column; gap: 18px; }
+      .cat-select-btn { width: 92vw; }
     }
   </style>
 </head>
@@ -117,21 +99,20 @@
   </header>
 
   <main class="main-content">
-    <!-- Offers Marquee Section -->
+
+    <!-- Offers Marquee and Navigation Section -->
     <div class="offers-marquee-section" aria-label="Scrolling offers">
       <span class="offers-marquee-label">
         Offers-@Hemaavathi_fashions:
       </span>
       <div class="offers-marquee">
         <div class="offers-marquee-content">
-          <!-- Add or replace with your actual images/links. Using random placeholders. -->
           <img src="https://source.unsplash.com/58x58/?fashion,offer" alt="Offer 1" loading="lazy" />
           <span>Grab 4 high quality cotton-dress materials for just ₹1,000</span>
           <img src="https://source.unsplash.com/58x58/?saree,discount" alt="Offer 2" loading="lazy" />
           <span>Flat 40% discount on all sarees</span>
           <img src="https://source.unsplash.com/58x58/?handloom,textiles" alt="Offer 3" loading="lazy" />
           <span>Special deals on all handlooms</span>
-          <!-- Repeated for smoothness -->
           <img src="https://source.unsplash.com/58x58/?fashion,offer" alt="Offer 1" loading="lazy" />
           <span>Grab 4 high quality cotton-dress materials for just ₹1,000</span>
           <img src="https://source.unsplash.com/58x58/?saree,discount" alt="Offer 2" loading="lazy" />
@@ -139,14 +120,29 @@
         </div>
       </div>
     </div>
-    <!-- Custom Navigation Bar: Up & Home always on top, others follow -->
-    <nav class="custom-nav-bar" aria-label="Custom nav">
-      <button class="custom-nav-btn up" onclick="navigateUp()">⬆ Up</button>
-      <button class="custom-nav-btn home" onclick="navigateHome()">🏠 Home</button>
-      <button class="custom-nav-btn" id="nav-btn-men" onclick="location.href='category.html?category=Men'">Men</button>
-      <button class="custom-nav-btn" id="nav-btn-women" onclick="location.href='category.html?category=Women'">Women</button>
-      <button class="custom-nav-btn" id="nav-btn-kids" onclick="location.href='category.html?category=Kids'">Kids</button>
-      <button class="custom-nav-btn" id="nav-btn-handlooms" onclick="location.href='category.html?category=Handlooms'">Handlooms</button>
+
+    <!-- Up/Home Bar + Main Categories (static) -->
+    <div class="up-home-bar">
+      <a class="nav-btn-up" href="index.html">⬆ Up</a>
+      <a class="nav-btn-home" href="index.html">🏠 Home</a>
+    </div>
+    <nav class="main-categories-bar" aria-label="Top categories">
+      <a href="category.html?category=Men" class="cat-select-btn">
+        <img src="https://i.postimg.cc/vmv674xt/mensweartdhirt.jpg" class="cat-select-img" alt="Men"/>
+        Men
+      </a>
+      <a href="category.html?category=Women" class="cat-select-btn">
+        <img src="https://i.postimg.cc/tJncVQvW/pinksareewomen.jpg" class="cat-select-img" alt="Women"/>
+        Women
+      </a>
+      <a href="category.html?category=Kids" class="cat-select-btn">
+        <img src="assets/kids.png" class="cat-select-img" alt="Kids"/>
+        Kids
+      </a>
+      <a href="category.html?category=Handlooms" class="cat-select-btn">
+        <img src="https://i.postimg.cc/T11m3Twq/handloomsbeddingset.jpg" class="cat-select-img" alt="Handlooms"/>
+        Handlooms
+      </a>
     </nav>
 
     <section class="category-header" aria-label="Introduction">
@@ -159,11 +155,9 @@
         <span style="color: var(--primary)">Handlooms</span>—at great prices.
       </p>
     </section>
-
     <section aria-label="Current offers" style="margin: 40px 0; max-width: 600px; margin-left: auto; margin-right: auto;">
       <h2 style="text-align: center; color: var(--secondary)">Current Offers</h2>
-      <ul id="static-offers-section">
-        <!-- Offers populated by JS or fallback offers -->
+      <ul>
         <li>Grab 4 high quality cotton-dress materials for just ₹1,000</li>
         <li>Flat 40% discount on all sarees</li>
       </ul>
@@ -185,7 +179,6 @@
         <h2>Men</h2>
         <p>Casual &amp; classic styles for modern men.</p>
       </article>
-
       <article
         class="category-card"
         role="listitem"
@@ -197,7 +190,6 @@
         <h2>Women</h2>
         <p>Trendy sarees, dress materials, and more.</p>
       </article>
-
       <article
         class="category-card"
         role="listitem"
@@ -209,7 +201,6 @@
         <h2>Kids</h2>
         <p>Comfortable and fun kidswear.</p>
       </article>
-
       <article
         class="category-card"
         role="listitem"
@@ -244,35 +235,5 @@
     </nav>
     <div style="margin-top: 18px; font-size: 0.9em;">&copy; 2025 Hemaavathi Fashions</div>
   </footer>
-  <script>
-    // Navigation Up/Home button highlighting logic
-    function navigateUp() {
-      // You can define custom logic if you navigate hierarchically.
-      window.history.length > 1 ? window.history.back() : window.location.href = 'index.html';
-    }
-    function navigateHome() {
-      window.location.href = 'index.html';
-    }
-
-    // Example: Highlight selected category button when navigated (add this if you have a query string `category=...`)
-    document.addEventListener('DOMContentLoaded', function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const cat = urlParams.get('category')?.trim();
-      if (!cat) return;
-      ['Men', 'Women', 'Kids', 'Handlooms'].forEach(function(c) {
-        document.getElementById('nav-btn-' + c.toLowerCase()).classList.toggle('selected', c.toLowerCase() === cat.toLowerCase());
-      })
-    });
-    // Example: Using offers.json to fill static-offers-section (Replace this with AJAX if you want dynamic update!)
-    // fetch('offers.json').then(r=>r.json()).then(offers=>{
-    //   const ul = document.getElementById('static-offers-section');
-    //   ul.innerHTML = '';
-    //   offers.forEach(item=>{
-    //     const li = document.createElement('li');
-    //     li.textContent = item.title;
-    //     ul.appendChild(li);
-    //   })
-    // })
-  </script>
 </body>
 </html>
