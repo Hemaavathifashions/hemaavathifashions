@@ -13,6 +13,91 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
   />
+  <style>
+    /* Style for marquee section and images */
+    .offers-marquee-section {
+      position: relative;
+      background: var(--background);
+      border-radius: 12px;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+      margin-bottom: 30px;
+      padding: 10px 0 8px 0;
+      overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .offers-marquee-label {
+      font-weight: 700;
+      color: var(--primary);
+      display: inline-block;
+      margin-right: 18px;
+      font-size: 1.08em;
+    }
+    .offers-marquee-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 26px;
+      animation: offers-marquee-scroll 28s linear infinite;
+      will-change: transform;
+    }
+    .offers-marquee img {
+      height: 58px;
+      width: 58px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #eee;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      margin-right: 9px;
+    }
+    @keyframes offers-marquee-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-60%); }
+    }
+    .offers-marquee {
+      width: 98%;
+      overflow: hidden;
+    }
+    /* Navigation bar buttons with up/home logic */
+    .custom-nav-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      margin: 28px auto 18px auto;
+      flex-wrap: wrap;
+    }
+    .custom-nav-btn,
+    .custom-nav-btn.selected {
+      padding: 8px 22px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 22px;
+      background: var(--primary);
+      color: #fff;
+      transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+    }
+    .custom-nav-btn.selected {
+      background: var(--accent);
+      color: var(--text);
+      box-shadow: 0 5px 16px rgba(251,191,36,0.5);
+      transform: scale(1.07);
+    }
+    .custom-nav-btn.up {
+      background: #ef4444;
+      font-weight: 700;
+    }
+    .custom-nav-btn.up:hover {
+      background: #b91c1c;
+    }
+    .custom-nav-btn.home {
+      background: #2563eb;
+      font-weight: 700;
+    }
+    .custom-nav-btn.home:hover {
+      background: #1e40af;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -32,6 +117,38 @@
   </header>
 
   <main class="main-content">
+    <!-- Offers Marquee Section -->
+    <div class="offers-marquee-section" aria-label="Scrolling offers">
+      <span class="offers-marquee-label">
+        Offers-@Hemaavathi_fashions:
+      </span>
+      <div class="offers-marquee">
+        <div class="offers-marquee-content">
+          <!-- Add or replace with your actual images/links. Using random placeholders. -->
+          <img src="https://source.unsplash.com/58x58/?fashion,offer" alt="Offer 1" loading="lazy" />
+          <span>Grab 4 high quality cotton-dress materials for just ₹1,000</span>
+          <img src="https://source.unsplash.com/58x58/?saree,discount" alt="Offer 2" loading="lazy" />
+          <span>Flat 40% discount on all sarees</span>
+          <img src="https://source.unsplash.com/58x58/?handloom,textiles" alt="Offer 3" loading="lazy" />
+          <span>Special deals on all handlooms</span>
+          <!-- Repeated for smoothness -->
+          <img src="https://source.unsplash.com/58x58/?fashion,offer" alt="Offer 1" loading="lazy" />
+          <span>Grab 4 high quality cotton-dress materials for just ₹1,000</span>
+          <img src="https://source.unsplash.com/58x58/?saree,discount" alt="Offer 2" loading="lazy" />
+          <span>Flat 40% discount on all sarees</span>
+        </div>
+      </div>
+    </div>
+    <!-- Custom Navigation Bar: Up & Home always on top, others follow -->
+    <nav class="custom-nav-bar" aria-label="Custom nav">
+      <button class="custom-nav-btn up" onclick="navigateUp()">⬆ Up</button>
+      <button class="custom-nav-btn home" onclick="navigateHome()">🏠 Home</button>
+      <button class="custom-nav-btn" id="nav-btn-men" onclick="location.href='category.html?category=Men'">Men</button>
+      <button class="custom-nav-btn" id="nav-btn-women" onclick="location.href='category.html?category=Women'">Women</button>
+      <button class="custom-nav-btn" id="nav-btn-kids" onclick="location.href='category.html?category=Kids'">Kids</button>
+      <button class="custom-nav-btn" id="nav-btn-handlooms" onclick="location.href='category.html?category=Handlooms'">Handlooms</button>
+    </nav>
+
     <section class="category-header" aria-label="Introduction">
       <h1>Welcome to Hemaavathi Fashions</h1>
       <p>
@@ -42,9 +159,11 @@
         <span style="color: var(--primary)">Handlooms</span>—at great prices.
       </p>
     </section>
+
     <section aria-label="Current offers" style="margin: 40px 0; max-width: 600px; margin-left: auto; margin-right: auto;">
       <h2 style="text-align: center; color: var(--secondary)">Current Offers</h2>
-      <ul>
+      <ul id="static-offers-section">
+        <!-- Offers populated by JS or fallback offers -->
         <li>Grab 4 high quality cotton-dress materials for just ₹1,000</li>
         <li>Flat 40% discount on all sarees</li>
       </ul>
@@ -59,8 +178,8 @@
         class="category-card"
         role="listitem"
         tabindex="0"
-        onclick="window.location='category.html?Men'"
-        onkeypress="if(event.key==='Enter'){window.location='category.html?Men';}"
+        onclick="window.location='category.html?category=Men'"
+        onkeypress="if(event.key==='Enter'){window.location='category.html?category=Men';}"
       >
         <img src="https://i.postimg.cc/vmv674xt/mensweartdhirt.jpg" alt="Men fashion" />
         <h2>Men</h2>
@@ -71,8 +190,8 @@
         class="category-card"
         role="listitem"
         tabindex="0"
-        onclick="window.location='category.html?Women'"
-        onkeypress="if(event.key==='Enter'){window.location='category.html?Women';}"
+        onclick="window.location='category.html?category=Women'"
+        onkeypress="if(event.key==='Enter'){window.location='category.html?category=Women';}"
       >
         <img src="https://i.postimg.cc/tJncVQvW/pinksareewomen.jpg" alt="Women fashion" />
         <h2>Women</h2>
@@ -83,8 +202,8 @@
         class="category-card"
         role="listitem"
         tabindex="0"
-        onclick="window.location='category.html?Kids'"
-        onkeypress="if(event.key==='Enter'){window.location='category.html?Kids';}"
+        onclick="window.location='category.html?category=Kids'"
+        onkeypress="if(event.key==='Enter'){window.location='category.html?category=Kids';}"
       >
         <img src="assets/kids.png" alt="Kids fashion" />
         <h2>Kids</h2>
@@ -95,8 +214,8 @@
         class="category-card"
         role="listitem"
         tabindex="0"
-        onclick="window.location='category.html?Handlooms'"
-        onkeypress="if(event.key==='Enter'){window.location='category.html?Handlooms';}"
+        onclick="window.location='category.html?category=Handlooms'"
+        onkeypress="if(event.key==='Enter'){window.location='category.html?category=Handlooms';}"
       >
         <img src="https://i.postimg.cc/T11m3Twq/handloomsbeddingset.jpg" alt="Handloom products" />
         <h2>Handlooms</h2>
@@ -125,5 +244,35 @@
     </nav>
     <div style="margin-top: 18px; font-size: 0.9em;">&copy; 2025 Hemaavathi Fashions</div>
   </footer>
+  <script>
+    // Navigation Up/Home button highlighting logic
+    function navigateUp() {
+      // You can define custom logic if you navigate hierarchically.
+      window.history.length > 1 ? window.history.back() : window.location.href = 'index.html';
+    }
+    function navigateHome() {
+      window.location.href = 'index.html';
+    }
+
+    // Example: Highlight selected category button when navigated (add this if you have a query string `category=...`)
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const cat = urlParams.get('category')?.trim();
+      if (!cat) return;
+      ['Men', 'Women', 'Kids', 'Handlooms'].forEach(function(c) {
+        document.getElementById('nav-btn-' + c.toLowerCase()).classList.toggle('selected', c.toLowerCase() === cat.toLowerCase());
+      })
+    });
+    // Example: Using offers.json to fill static-offers-section (Replace this with AJAX if you want dynamic update!)
+    // fetch('offers.json').then(r=>r.json()).then(offers=>{
+    //   const ul = document.getElementById('static-offers-section');
+    //   ul.innerHTML = '';
+    //   offers.forEach(item=>{
+    //     const li = document.createElement('li');
+    //     li.textContent = item.title;
+    //     ul.appendChild(li);
+    //   })
+    // })
+  </script>
 </body>
 </html>
